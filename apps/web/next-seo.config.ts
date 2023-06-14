@@ -1,10 +1,10 @@
 import { DefaultSeoProps } from 'next-seo'
 
 export const SEO: DefaultSeoProps = {
-  titleTemplate: '%s | CanarySwap',
-  defaultTitle: 'CanarySwap',
+  titleTemplate: '%s | CanaryX',
+  defaultTitle: 'CanaryX',
   description:
-    'Unlock the world of Canary | Mint Founder NFTs',
+    'Unlock the world of CanaryX | Mint Founder NFTs',
   twitter: {
     cardType: 'summary_large_image',
     handle: '@canaryxtoken',
