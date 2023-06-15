@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://canaryx.finance">
-      <img src="https://canaryx.finance/fullLogo.png" height="128">
+      <img src="https://app.canaryx.finance/fullLogo.png" height="128">
   </a>
 </p>
 
