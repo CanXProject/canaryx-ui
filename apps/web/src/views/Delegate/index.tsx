@@ -272,7 +272,7 @@ const CreateToken = () => {
         <Flex flexDirection={['column-reverse', null, 'row']}>
           <Left>
             <Heading as="h1" scale="xxl" my="24px">
-              Maximize Your SGB on CanaryX
+              Maximize Your SGB
             </Heading>
           </Left>
 
@@ -501,7 +501,7 @@ const CreateToken = () => {
                           }}
                           mb="16px"
                         >
-                          Claimyour delegation rewards {pendingReward &&  pendingReward  } SGB
+                          Claim your delegation rewards {pendingReward &&  pendingReward  } SGB
                         </Button>
                         </CardFooter>
                       </Card>
