@@ -56,17 +56,19 @@ export const SliderLabelContainer = styled.div`
 `;  */}
 
 export const SliderLabel = styled(Text)<SliderLabelProps>`
-  bottom: -10px; // You may need to adjust this based on your layout and preferences
+  bottom: 12px; // You may need to adjust this based on your layout and preferences
   font-size: 12px;
-  left: ${({ progress }) => progress};
+  left: calc(${({ progress }) => progress} - 12px); // Subtracting half of the width of the SliderLabel
   position: absolute;
   text-align: center;
   min-width: 24px;
   height: 24px; // Make the height the same as the width
   line-height: 24px; // Center the text vertically
-  border-radius: 50%; // Make it circular
+  border-radius: 20%; // Make it circular
   background-color: linear-gradient(135deg, #2196F3, #808080); // Choose a color that matches your handle
-  color: #ffffff; // Choose a color that contrasts with the handle color
+  color: black; // Adjust this as needed
+  font-weight: bold;
+  text-shadow: 0 0 10px #2196F3;
   box-shadow: 0 0 10px #2196F3, 0 0 5px #808080;
 `; 
 
