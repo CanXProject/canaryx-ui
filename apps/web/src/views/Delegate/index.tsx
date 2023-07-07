@@ -44,6 +44,7 @@ import { PercentSlider } from '@pancakeswap/uikit/src/widgets/Liquidity'
 import FlexRow from 'views/Predictions/components/FlexRow'
 import { AtomBox } from '@pancakeswap/ui'
 import { BigNumber } from 'ethers';
+import Delegate from 'views/Delegate';
 
 const StyledHeader = styled(PageHeader)`
   max-height: max-content;
@@ -272,7 +273,7 @@ const CreateToken = () => {
         <Flex flexDirection={['column-reverse', null, 'row']}>
           <Left>
             <Heading as="h1" scale="xxl" my="24px">
-              Maximize Your SGB
+              Delegate Your SGB
             </Heading>
           </Left>
 
