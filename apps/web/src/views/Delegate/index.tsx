@@ -272,7 +272,7 @@ const CreateToken = () => {
         <Flex flexDirection={['column-reverse', null, 'row']}>
           <Left>
             <Heading as="h1" scale="xxl" my="24px">
-              Delegate Your WSGB
+              Maximize Your SGB on CanaryX
             </Heading>
           </Left>
 
@@ -301,7 +301,7 @@ const CreateToken = () => {
               }}>
                 <CardHeader>
                   <Heading as="h3" scale="md">
-                    SGB Delegation
+                    Delegate on the Flare Network
                   </Heading>
                 </CardHeader>
 
@@ -311,7 +311,7 @@ const CreateToken = () => {
                   <div style={{ display: isMobile ? "block" : "flex", justifyContent: "space-between" }}>
                     <div style={{ width: isMobile ? "100%" : "80%" }}>
                       <Box mb="24px">
-                        <SecondaryLabel>SGB Balance:</SecondaryLabel>
+                        <SecondaryLabel>Your SGB Balance:</SecondaryLabel>
                         <Input
                           disabled
 
@@ -322,7 +322,7 @@ const CreateToken = () => {
                       </Box>
 
                       <Box mb="24px">
-                        <SecondaryLabel>WSGB Balance:</SecondaryLabel>
+                        <SecondaryLabel>Ready-to-Delegate WSGB:</SecondaryLabel>
                         <Input
                           disabled
                           value={formattedWbnbBalance}
@@ -336,18 +336,18 @@ const CreateToken = () => {
                           href="/swap?chain=songbird&outputCurrency=0x02f0826ef6aD107Cfc861152B32B52fD11BaB9ED"
                           style={{ textDecoration: 'underline' }}
                         >
-                          Convert SGB To WSGB
+                          Wrap SGB To WSGB
                         </Link>
                       </Box>
 
 
                       <Box mb="24px">
-                        <SecondaryLabel>Select Provider:</SecondaryLabel>
+                        <SecondaryLabel>Choose Your Data Provider:</SecondaryLabel>
                         <Dropdown options={getDropdownOptions()} onChange={(item: Option) => {
                           if (item && item.value) {
                             setDelegationAddress(item?.value)
                           }
-                        }} placeholder="Select an option" />
+                        }} placeholder="-- Browse Options --" />
 
                       </Box>
                       <Box mb="24px">
@@ -386,7 +386,7 @@ const CreateToken = () => {
                             }}
                             mb="16px"
                           >
-                            Delegate
+                            Commence Delegation
                           </Button>
 
 
@@ -417,12 +417,12 @@ const CreateToken = () => {
                         <thead>
                           <Th >
                             <Text fontSize="12px" bold textTransform="uppercase" color="textSubtle" textAlign="left" >
-                              Provider
+                              Your Delegation Partners
                             </Text>
                           </Th>
                           <Th >
                             <Text fontSize="12px" bold textTransform="uppercase" color="textSubtle" textAlign="left">
-                              Delegated Percent
+                              Percent
                             </Text>
                           </Th>
                           <Th />
@@ -484,7 +484,7 @@ const CreateToken = () => {
                           }}
                           mb="16px"
                         >
-                          Undelegate All
+                          Retract All Delegations
                         </Button>
 
 
@@ -501,7 +501,7 @@ const CreateToken = () => {
                           }}
                           mb="16px"
                         >
-                          Claim {pendingReward &&  pendingReward  } SGB Reward
+                          Claimyour delegation rewards {pendingReward &&  pendingReward  } SGB
                         </Button>
                         </CardFooter>
                       </Card>
