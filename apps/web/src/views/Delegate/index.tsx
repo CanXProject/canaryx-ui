@@ -434,7 +434,7 @@ const CreateToken = () => {
                                    <Td>
                                     <Text fontSize="14px">
                                       {item.providerName}
-                                      {item.address}
+                                      {/* {item.address} */}
                               </Text>
                                   </Td>
                                 <Td>
