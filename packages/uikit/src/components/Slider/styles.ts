@@ -58,6 +58,7 @@ export const SliderLabelContainer = styled.div`
 export const SliderLabel = styled(Text)<SliderLabelProps>`
   bottom: 12px; // You may need to adjust this based on your layout and preferences
   font-size: 12px;
+  z-index: 1;
   left: calc(${({ progress }) => progress} - 12px); // Subtracting half of the width of the SliderLabel
   position: absolute;
   text-align: center;
@@ -65,7 +66,7 @@ export const SliderLabel = styled(Text)<SliderLabelProps>`
   height: 24px; // Make the height the same as the width
   line-height: 24px; // Center the text vertically
   border-radius: 20%; // Make it circular
-  background-color: linear-gradient(135deg, #2196F3, #808080); // Choose a color that matches your handle
+  background: #7b7b7b;
   color: black; // Adjust this as needed
   font-weight: bold;
   text-shadow: 0 0 10px #2196F3;
@@ -90,6 +91,7 @@ export const BunnySlider = styled.div`
 export const StyledInput = styled.input<StyledInputProps>`
   cursor: ${getCursorStyle};
   height: 32px;
+  z-index: 2;
   position: relative;
   ::-webkit-slider-thumb {
     ${getBaseThumbStyles}
