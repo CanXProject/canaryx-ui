@@ -183,7 +183,7 @@ const CreateToken = () => {
     } else if (delegations.length === 2) {
       errors = {
         ...errors,
-        wgbDelegationError: "Max Delegation Exceeds "
+        wgbDelegationError: "Max Delegation Exceeded"
       }
       isError = true
     } else {

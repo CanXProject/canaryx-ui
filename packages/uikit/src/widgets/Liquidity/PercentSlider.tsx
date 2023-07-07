@@ -42,6 +42,7 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
         mb="16px"
       />
       <AtomBox display="flex" flexWrap="wrap" justifyContent="space-between">
+      <p>Selected Value: {innerLiquidityPercentage}%</p> {/* Display the current value */}
         <Button variant="tertiary" scale="sm" onClick={() => onValueChanged("25")}>
           25%
         </Button>
