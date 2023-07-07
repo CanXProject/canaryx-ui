@@ -38,11 +38,11 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
         min={0}
         max={100}
         value={innerLiquidityPercentage}
+        valueLabel={innerLiquidityPercentage.toString()} // pass current value as valueLabel
         onValueChanged={handleChangePercent}
         mb="16px"
       />
       <AtomBox display="flex" flexWrap="wrap" justifyContent="space-between">
-      <p>Selected Value: {innerLiquidityPercentage}%</p> {/* Display the current value */}
         <Button variant="tertiary" scale="sm" onClick={() => onValueChanged("25")}>
           25%
         </Button>

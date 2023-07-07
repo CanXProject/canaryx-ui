@@ -46,14 +46,30 @@ export const SliderLabelContainer = styled.div`
   width: calc(100% - 30px);
 `;
 
-export const SliderLabel = styled(Text)<SliderLabelProps>`
+{/* export const SliderLabel = styled(Text)<SliderLabelProps>`
   bottom: 0;
   font-size: 12px;
   left: ${({ progress }) => progress};
   position: absolute;
   text-align: center;
   min-width: 24px; // Slider thumb size
-`;
+`;  */}
+
+export const SliderLabel = styled(Text)<SliderLabelProps>`
+  bottom: -10px; // You may need to adjust this based on your layout and preferences
+  font-size: 12px;
+  left: ${({ progress }) => progress};
+  position: absolute;
+  text-align: center;
+  min-width: 24px;
+  height: 24px; // Make the height the same as the width
+  line-height: 24px; // Center the text vertically
+  border-radius: 50%; // Make it circular
+  background-color: linear-gradient(135deg, #2196F3, #808080); // Choose a color that matches your handle
+  color: #ffffff; // Choose a color that contrasts with the handle color
+  box-shadow: 0 0 10px #2196F3, 0 0 5px #808080;
+`; 
+
 
 export const BunnyButt = styled.div<DisabledProp>`
   background: url(${bunnyButt}) no-repeat;
