@@ -15,7 +15,7 @@ export const StyledPriceChart = styled(Box)<{
     background: ${({ $isDark }) => ($isDark ? 'rgba(39, 38, 44, 0.5)' : 'rgba(255, 255, 255, 0.5)')};
     border: ${({ theme }) => `1px solid ${theme.colors.cardBorder}`};
     border-radius: ${({ $isExpanded }) => ($isExpanded ? '0' : '8px')};
-    width: ${({ $isExpanded, $isFullWidthContainer }) => ($isFullWidthContainer || $isExpanded ? '100%' : '50%')};
+    width: ${({ $isExpanded, $isFullWidthContainer }) => ($isFullWidthContainer || $isExpanded ? '100%' : '60%')};
     height: ${({ $isExpanded }) => ($isExpanded ? '100%' : '516px')};
   }
 `

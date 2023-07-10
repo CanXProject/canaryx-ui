@@ -63,14 +63,14 @@ export const SliderLabel = styled(Text)<SliderLabelProps>`
   position: absolute;
   text-align: center;
   min-width: 24px;
-  height: 24px; // Make the height the same as the width
+  height: 23px; // Make the height the same as the width
   line-height: 24px; // Center the text vertically
   border-radius: 20%; // Make it circular
-  background: #7b7b7b;
-  color: black; // Adjust this as needed
+  background: #6b6b6b;
+  color: #fff; // Adjust this as needed
   font-weight: bold;
-  text-shadow: 0 0 10px #2196F3;
-  box-shadow: 0 0 10px #2196F3, 0 0 5px #808080;
+  text-shadow: 0 0 10px #ffffff;
+  box-shadow: 0 0 10px #ffffff, 0 0 5px #ffffff;
 `; 
 
 
@@ -106,14 +106,14 @@ export const StyledInput = styled.input<StyledInputProps>`
 
 export const BarBackground = styled.div<DisabledProp>`
   background-color: ${({ theme, disabled }) => theme.colors[disabled ? "textDisabled" : "inputSecondary"]};
-  height: 2px;
+  height: 12px;
   position: absolute;
   top: 18px;
   width: 100%;
 `;
 
 export const BarProgress = styled.div<DisabledProp>`
-  background-color: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => `linear-gradient(90deg, ${theme.colors.primary} 0%, ${theme.colors.secondary} 100%)`};
   filter: ${({ disabled }) => (disabled ? "grayscale(100%)" : "none")};
   height: 10px;
   position: absolute;
