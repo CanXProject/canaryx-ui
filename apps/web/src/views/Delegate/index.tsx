@@ -269,14 +269,22 @@ const CreateToken = () => {
   return (
     <>
       <StyledHeader>
-
         <Flex flexDirection={['column-reverse', null, 'row']}>
           <Left>
             <Heading as="h1" scale="xxl" my="24px">
               Delegate Your SGB
             </Heading>
+            <Flex justifyContent="center" alignItems="center" mt="16px">
+              <Text color="textSubtle" mb="8px" mr="8px">
+                Once you're done with the delegation, you can provide liquidity to earn even more.
+              </Text>
+              <Link href="https://app.canaryx.finance/liquidity?chain=songbird" passHref>
+                <Button id="to-liquidity-link" variant="secondary" scale="sm">
+                  Go To Liquidity
+                </Button>
+              </Link>
+            </Flex>
           </Left>
-
         </Flex>
       </StyledHeader>
       <>
@@ -377,7 +385,7 @@ const CreateToken = () => {
 
                       {account && (
                         <>
-                          <Button
+                          <Button  scale="sm"
                             type="submit"
                             width="100%"
                             isLoading={isLoading}
@@ -475,7 +483,7 @@ const CreateToken = () => {
 
                         </CardBody>
                         <CardFooter>
-                        <Button
+                        <Button  variant="secondary" scale="sm"
                           type="submit"
                           width="100%"
                           isLoading={isLoading}
@@ -491,7 +499,7 @@ const CreateToken = () => {
 
 
 
-                        <Button
+                        <Button  scale="sm"
                           type="submit"
                           width="100%"
                           disabled={Number.isNaN(Number(pendingReward))}
