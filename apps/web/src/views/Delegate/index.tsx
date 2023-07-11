@@ -276,9 +276,9 @@ const CreateToken = () => {
             </Heading>
             <Flex justifyContent="center" alignItems="center" mt="16px">
               <Text color="textSubtle" mb="8px" mr="8px">
-                Once you're done with the delegation, you can provide liquidity to earn even more.
+                Once you are done with the delegation, you can provide liquidity to earn even more.
               </Text>
-              <Link href="https://app.canaryx.finance/liquidity?chain=songbird" passHref>
+              <Link href="https://app.canaryx.finance/liquidity?chain=songbird" >
                 <Button id="to-liquidity-link" variant="secondary" scale="sm">
                   Go To Liquidity
                 </Button>

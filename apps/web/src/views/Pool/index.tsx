@@ -117,7 +117,7 @@ export default function Pool() {
           <Text color="textSubtle" mb="8px" mr="8px">
             {t('Delegate your tokens on the SGB network and start earning even before you supply liquidity.')}
           </Text>
-          <Link href="https://app.canaryx.finance/delegate?chain=songbird" passHref>
+          <Link href="https://app.canaryx.finance/delegate?chain=songbird" >
             <Button id="delegate-link" variant="secondary" scale="sm">
               {t('Delegate Now')}
             </Button>
