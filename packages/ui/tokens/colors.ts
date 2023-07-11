@@ -24,7 +24,7 @@ export const additionalColors = {
 export const lightColors = {
   ...baseColors,
   ...additionalColors,
-  primary: '#7b7b7b',
+  primary: '#6ca9df',
   secondary: '#0088cc',
   secondary80: '#0088cc80',
   background: '#c2c1c1',
@@ -59,7 +59,7 @@ export const lightColors = {
 export const darkColors = {
   ...baseColors,
   ...additionalColors,
-  primary: '#adb5bd',
+  primary: '#c6cde1',
   secondary: '#08c',
   secondary80: '#9A6AFF80',
   background: 'linear-gradient(90deg,#2f2d38,#353535)',

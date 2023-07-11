@@ -113,7 +113,7 @@ export const BarBackground = styled.div<DisabledProp>`
 `;
 
 export const BarProgress = styled.div<DisabledProp>`
-  background: ${({ theme }) => `linear-gradient(90deg, ${theme.colors.primary} 0%, ${theme.colors.secondary} 100%)`};
+  background: ${({ theme }) => `linear-gradient(90deg, ${theme.colors.text99} 0%, ${theme.colors.secondary} 100%)`};
   filter: ${({ disabled }) => (disabled ? "grayscale(100%)" : "none")};
   height: 10px;
   position: absolute;
