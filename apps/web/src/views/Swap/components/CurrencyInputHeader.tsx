@@ -24,7 +24,7 @@ import { useAtom } from 'jotai'
 import { ReactElement, useCallback, useContext, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useExpertModeManager } from 'state/user/hooks'
-import styled from 'styled-components'
+import styled, {keyframes } from 'styled-components'
 import atomWithStorageWithErrorCatch from 'utils/atomWithStorageWithErrorCatch'
 import { SettingsMode } from '../../../components/Menu/GlobalSettings/types'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
@@ -43,6 +43,49 @@ const ColoredIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.colors.textSubtle};
   overflow: hidden;
 `
+const ZoomEffectWrapper = styled.div`
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.3);
+  }
+`;
+
+const StyledChartIcon = styled(ChartIcon)`
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.3);
+  }
+`;
+
+const StyledChartDisableIcon = styled(ChartDisableIcon)`
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.3);
+  }
+`;
+
+
+
+const rotation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const RotateEffect = styled.div`
+  transition: transform 0.3s ease-in-out;
+
+  :hover {
+    animation: ${rotation} 2s infinite linear;
+  
+  }
+`;
+
 
 //  disable this during the v3 campaign
 const mobileShowOnceTokenHighlightAtom = atomWithStorageWithErrorCatch('pcs::mobileShowOnceTokenHighlightV2', true)
@@ -110,20 +153,29 @@ const CurrencyInputHeader: React.FC<React.PropsWithChildren<Props>> = ({
             variant="text"
             scale="sm"
           >
-            {isChartDisplayed ? <ChartDisableIcon color="textSubtle" /> : <ChartIcon width="24px" color="textSubtle" />}
-          </ColoredIconButton>
-        )}
+            {isChartDisplayed ? (
+            <StyledChartDisableIcon color="textSubtle" />
+          ) : (
+            <StyledChartIcon width="24px" color="textSubtle" />
+          )}
+        </ColoredIconButton>
+      )}
     
-        <NotificationDot show={expertMode}>
+    <NotificationDot show={expertMode}>
+        <RotateEffect>
           <GlobalSettings color="textSubtle" mr="0" mode={SettingsMode.SWAP_LIQUIDITY} />
-        </NotificationDot>
+        </RotateEffect>
+      </NotificationDot>
+
+      <ZoomEffectWrapper>
         <IconButton onClick={onPresentTransactionsModal} variant="text" scale="sm">
           <HistoryIcon color="textSubtle" width="24px" />
         </IconButton>
-       
-      </Flex>
+      </ZoomEffectWrapper>
     </Flex>
-  )
+  </Flex>
+)
+
 
   return <Swap.CurrencyInputHeader title={titleContent} subtitle={<></>} />
 }

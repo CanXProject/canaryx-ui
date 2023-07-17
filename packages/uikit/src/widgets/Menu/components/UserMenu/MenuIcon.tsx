@@ -27,9 +27,15 @@ const ProfileIcon = styled(Image)`
   position: absolute;
   top: 0;
   z-index: 102;
+  height: 34px;
+  width: 34px;
 
   & > img {
     border-radius: 50%;
+    height:32px;
+    width:32px;
+    padding-top:2px;
+    padding-left:2px;
   }
 `;
 

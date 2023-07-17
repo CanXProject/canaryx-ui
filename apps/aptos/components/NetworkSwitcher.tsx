@@ -32,8 +32,8 @@ const NetworkSelect = () => {
         >
           <Image
             src={`${APEX_DOMAIN}/images/chains/${chain.id}.png`}
-            width={24}
-            height={24}
+            width={20}
+            height={20}
             unoptimized
             alt={`chain-${chain.id}`}
           />
