@@ -44,10 +44,10 @@ const spin = keyframes`
 
 const SpinningRing = styled.div`
   position: absolute;
-  top: -2px;
-  left: -2px;
-  width: 110%;
-  height: 110%;
+  top: -1px;
+  left: -1px;
+  width: 105%;
+  height: 105%;
   border: 3px solid #6ca9df;
   border-radius: 50%;
   border-top-color: #dab6ff;

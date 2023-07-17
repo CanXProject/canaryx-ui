@@ -10,12 +10,12 @@ import { UserMenuItem } from "./styles";
 export const StyledUserMenu = styled(Flex)`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.tertiary};
-  border-radius: 10px;
+  border-radius: 16px;
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: inline-flex;
   height: 32px;
-  padding-left: 32px;
+  padding-left: 2px;
   padding-right: 8px;
   position: relative;
 
@@ -31,7 +31,7 @@ export const LabelText = styled.div`
 
   ${({ theme }) => theme.mediaQueries.sm} {
     display: block;
-    margin-left: 8px;
+    margin-left: 33px;
     margin-right: 4px;
   }
 `;
