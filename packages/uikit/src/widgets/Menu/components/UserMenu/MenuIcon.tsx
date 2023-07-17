@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Variant, variants } from "./types";
 import { Image } from "../../../../components/Image";
 import { RefreshIcon, WalletFilledIcon, WarningIcon } from "../../../../components/Svg";
@@ -27,18 +27,49 @@ const ProfileIcon = styled(Image)`
   position: absolute;
   top: 0;
   z-index: 102;
-  height: 34px;
-  width: 34px;
 
   & > img {
     border-radius: 50%;
-    height:32px;
-    width:32px;
-    padding-top:2px;
-    padding-left:2px;
   }
 `;
 
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const SpinningRing = styled.div`
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 110%;
+  height: 110%;
+  border: 3px solid #6ca9df;
+  border-radius: 50%;
+  border-top-color: #dab6ff;
+  animation: ${spin} 2s linear infinite;
+  box-sizing: border-box;
+`;
+
+const ProfileIconWithSpinner = styled.div`
+  position: relative;
+  width: 32px;
+  height: 32px;
+
+  ${ProfileIcon} {
+    position: relative;
+    z-index: 0;
+  }
+
+  ${SpinningRing} {
+    position: absolute;
+    z-index: 1;
+  }
+`;
 export const NoProfileMenuIcon: React.FC<React.PropsWithChildren> = () => (
   <MenuIconWrapper borderColor="primary">
     <WalletFilledIcon color="primary" width="24px" />
@@ -63,7 +94,7 @@ export const DangerMenuIcon: React.FC<React.PropsWithChildren> = () => (
   </MenuIconWrapper>
 );
 
-const MenuIcon: React.FC<React.PropsWithChildren<{ avatarSrc?: string; variant: Variant; className?: string }>> = ({
+const MenuIcon: React.FC<{ avatarSrc?: string; variant: Variant; className?: string }> = ({
   avatarSrc,
   variant,
   className,
@@ -84,7 +115,12 @@ const MenuIcon: React.FC<React.PropsWithChildren<{ avatarSrc?: string; variant: 
     return <NoProfileMenuIcon />;
   }
 
-  return <ProfileIcon src={avatarSrc} height={32} width={32} className={className} />;
+  return (
+    <ProfileIconWithSpinner>
+      <ProfileIcon src={avatarSrc} height={32} width={32} className={className} />
+      <SpinningRing />
+    </ProfileIconWithSpinner>
+  );
 };
 
 export default MenuIcon;
