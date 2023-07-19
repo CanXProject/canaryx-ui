@@ -1,11 +1,23 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Card } from '@pancakeswap/uikit'
+
+const fadeInAndGrow = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`
 
 export const BodyWrapper = styled(Card)`
   border-radius: 10px;
   // max-width: 436px;
   width: 100%;
   z-index: 1;
+  animation: ${fadeInAndGrow} 0.6s ease-out;
 `
 
 /**

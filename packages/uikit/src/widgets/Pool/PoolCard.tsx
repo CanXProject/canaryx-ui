@@ -1,11 +1,28 @@
 import { useTranslation } from "@pancakeswap/localization";
 import { ReactElement } from "react";
+import styled, { keyframes } from 'styled-components';
 import { Flex } from "../../components/Box";
 import { CardBody, CardRibbon } from "../../components/Card";
 import { Skeleton } from "../../components/Skeleton";
 import { PoolCardHeader, PoolCardHeaderTitle } from "./PoolCardHeader";
 import { StyledCard } from "./StyledCard";
 import { DeserializedPool } from "./types";
+
+const fadeInAndGrow = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`
+
+const AnimatedStyledCard = styled(StyledCard)`
+  animation: ${fadeInAndGrow} 1s ease-out;
+`
+
 
 interface PoolCardPropsType<T> {
   pool: DeserializedPool<T>;
@@ -23,7 +40,7 @@ export function PoolCard<T>({ pool, cardContent, aprRow, isStaked, cardFooter, t
   const isCakePool = earningToken?.symbol === "CANARY" && stakingToken?.symbol === "CANARY";
 
   return (
-    <StyledCard
+    <AnimatedStyledCard
       isActive={isCakePool}
       isFinished={isFinished && sousId !== 0}
       ribbon={isFinished && <CardRibbon variantColor="textDisabled" text={t("Finished")} />}
@@ -56,6 +73,6 @@ export function PoolCard<T>({ pool, cardContent, aprRow, isStaked, cardFooter, t
         </Flex>
       </CardBody>
       {cardFooter}
-    </StyledCard>
+    </AnimatedStyledCard>
   );
 }

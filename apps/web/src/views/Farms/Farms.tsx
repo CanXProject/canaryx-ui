@@ -22,7 +22,7 @@ import {
   NextLinkFromReactRouter,
   ToggleView,
 } from '@pancakeswap/uikit'
-import styled from 'styled-components'
+import styled, { keyframes } from "styled-components";
 import Page from 'components/Layout/Page'
 import { useFarms, usePollFarmsWithUserData, usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVaultUserData } from 'state/pools/hooks'
@@ -41,15 +41,27 @@ import { FarmTypesFilter } from './components/FarmTypesFilter'
 import { FarmsContext } from './context'
 import useMultiChainHarvestModal from './hooks/useMultiChainHarvestModal'
 
+const fadeInFromRight = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`
+
 const ControlContainer = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
   position: relative;
-
   justify-content: space-between;
   flex-direction: column;
   margin-bottom: 32px;
+  border-radius: 10px;
+  animation: ${fadeInFromRight} 1.5s ease-in forwards;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     flex-direction: row;
@@ -57,7 +69,26 @@ const ControlContainer = styled.div`
     padding: 16px 32px;
     margin-bottom: 0;
   }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: ${({ theme }) => theme.colors.gradientCardHeader};
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    border-radius: 10px;
+    z-index: -1;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
 `
+
 const FarmFlexWrapper = styled(Flex)`
   flex-wrap: wrap;
   ${({ theme }) => theme.mediaQueries.md} {

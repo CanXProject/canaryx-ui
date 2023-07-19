@@ -69,7 +69,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 </Flex>
               )}
 
-<CardLayout>
+                <CardLayout>
                   {chosenPools.map((pool) =>
                      <Pool.PoolCard<Token>
                      key={pool.sousId}

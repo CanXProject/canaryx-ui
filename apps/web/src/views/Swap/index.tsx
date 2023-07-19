@@ -22,7 +22,6 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 
 const queryClient = new QueryClient()
-const MotionPriceChartContainer = motion(PriceChartContainer);
 const MotionStyledSwapContainer = motion(StyledSwapContainer);
 
 export default function Swap() {

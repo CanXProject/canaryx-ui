@@ -29,7 +29,7 @@ const GlobalSettings = ({ color, mr = '8px', mode }: Props) => {
   const renderCogIcon = () => {
     if (mode === "GLOBAL") {
       // Render spinning icon for global mode
-      return <SpinningCogIcon height={24} width={24} color={color || 'textSubtle'} />
+      return <SpinningCogIcon height={24} width={24} color={color || 'settings'} />
     } 
       // Render normal icon for other modes
       return <CogIcon height={24} width={24} color={color || 'textSubtle'} />

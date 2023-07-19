@@ -1,5 +1,5 @@
 import { useRef, useMemo } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 import { RowType, DesktopColumnSchema } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
@@ -19,12 +19,24 @@ export interface ITableProps {
   sortColumn?: string
 }
 
+const fadeInFromBottom = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const Container = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.card.background};
   border-radius: 10px;
   margin: 16px 0px;
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  animation: ${fadeInFromBottom} 1.5s ease-out;
 `
 
 const TableWrapper = styled.div`
