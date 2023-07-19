@@ -21,15 +21,24 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
     [onValueChanged]
   );
 
+  // Check if currentValue is a number, if not set to 0
+  const validCurrentValue = Number.isNaN(currentValue) ? 0 : currentValue;
   const [innerLiquidityPercentage, setInnerLiquidityPercentage] = useDebouncedChangeHandler(
-    currentValue,
+    validCurrentValue,
     liquidityPercentChangeCallback
   );
 
   const handleChangePercent = useCallback(
-    (value: any) => setInnerLiquidityPercentage(Math.ceil(value)),
+    (value: any) => {
+      // Check if value is a number, if not set to 0
+      const validValue = Number.isNaN(value) ? 0 : Math.ceil(value);
+      setInnerLiquidityPercentage(validValue);
+    },
     [setInnerLiquidityPercentage]
   );
+
+  // Check if innerLiquidityPercentage is a number, if not set to 0
+  const validInnerLiquidityPercentage = Number.isNaN(innerLiquidityPercentage) ? 0 : innerLiquidityPercentage;
 
   return (
     <>
@@ -37,8 +46,8 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
         name="lp-amount"
         min={0}
         max={100}
-        value={innerLiquidityPercentage}
-        valueLabel={innerLiquidityPercentage.toString()} // pass current value as valueLabel
+        value={validInnerLiquidityPercentage}
+        valueLabel={validInnerLiquidityPercentage.toString()} // pass current value as valueLabel
         onValueChanged={handleChangePercent}
         mb="16px"
       />

@@ -1,4 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
+import { motion } from 'framer-motion'
 import { Currency } from '@pancakeswap/sdk'
 import { BottomDrawer, Flex, Modal, ModalV2, useMatchBreakpoints } from '@pancakeswap/uikit'
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
@@ -21,6 +22,8 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 
 const queryClient = new QueryClient()
+const MotionPriceChartContainer = motion(PriceChartContainer);
+const MotionStyledSwapContainer = motion(StyledSwapContainer);
 
 export default function Swap() {
   const { isDesktop } = useMatchBreakpoints()
@@ -97,6 +100,7 @@ export default function Swap() {
             setIsOpen={setIsChartDisplayed}
           />
         )}
+   
         {/* {isDesktop && isSwapHotTokenDisplay && <HotTokenList handleOutputSelect={handleOutputSelect} />} */}
         {/* <ModalV2 isOpen={!isDesktop && isSwapHotTokenDisplay} onDismiss={() => setIsSwapHotTokenDisplay(false)}>
           <Modal
@@ -114,7 +118,17 @@ export default function Swap() {
           </Modal>
         </ModalV2> */}
         <Flex flexDirection="column">
-          <StyledSwapContainer $isChartExpanded={isChartExpanded}>
+          <MotionStyledSwapContainer
+            initial={{ opacity: 0, y: 0 }} // Starts from the right
+            animate={{ opacity: 1, y: 0 }}  // Moves to its original position
+            exit={{ opacity: 0, y: -0 }}    // Exits to the right
+            transition={{ 
+              type: 'tween', 
+              damping: 60, 
+              stiffness: 100 
+            }}
+            $isChartExpanded={isChartExpanded}
+          >
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               <AppBody>
                 <QueryClientProvider client={queryClient}>
@@ -122,7 +136,7 @@ export default function Swap() {
                 </QueryClientProvider>
               </AppBody>
             </StyledInputCurrencyWrapper>
-          </StyledSwapContainer>
+          </MotionStyledSwapContainer>
         </Flex>
       </Flex>
     </Page>

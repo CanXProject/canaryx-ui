@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { ExpandIcon, Flex, IconButton, ShrinkIcon, SyncAltIcon, Text } from '@pancakeswap/uikit'
 import { CurrencyLogo, DoubleCurrencyLogo } from 'components/Logo'
 import { ChartViewMode } from 'state/user/actions'
@@ -21,8 +22,15 @@ const PriceChart = ({
   const toggleExpanded = () => setIsChartExpanded((currentIsExpanded) => !currentIsExpanded)
   const [chartView] = useExchangeChartViewManager()
 
+  const [loaded, setLoaded] = useState(false);
+  
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
-    <StyledPriceChart
+    <StyledPriceChart 
+      className={loaded ? 'loaded' : ''}
       height={chartView === ChartViewMode.TRADING_VIEW ? '100%' : '70%'}
       overflow={chartView === ChartViewMode.TRADING_VIEW ? 'hidden' : 'unset'}
       $isDark={isDark}
