@@ -22,7 +22,7 @@ const Page: React.FC<
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
   const isSONGBIRD = chainId === ChainId.SONGBIRD
-  const externalText = isSONGBIRD ? t('Bridge assets to BNB Chain') : ''
+  const externalText = isSONGBIRD ? t('Bridge assets to SGB Chain') : ''
   const externalLinkUrl = isSONGBIRD? 'https://bridge.canaryx.finance/' : ''
 
   return (
