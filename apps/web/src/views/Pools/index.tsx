@@ -35,45 +35,36 @@ const FinishedTextLink = styled(Link)`
 `
 
 
-  const Pools: React.FC<React.PropsWithChildren> = () => {
-    const { t } = useTranslation()
-    const { address: account } = useAccount()
-    const { pools, userDataLoaded } = usePoolsWithVault()
-  
-    usePoolsPageFetch()
-  
-    return (
-      <>
-        <PageHeader>
-          <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
-            <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
-              <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-               Staking Pools
-              </Heading>
-              <Heading scale="md" color="text">
-                {t('Just stake some tokens to earn.')}
-              </Heading>
-              <Heading scale="md" color="text">
-                {t('High APR, low risk.')}
-              </Heading>
-              <Flex alignItems="center" px="16px" py="8px">
-                <QuestionHelper text={t(
-                  'Maximize your earning potential effortlessly with our Staking Pools. Securely stake your tokens to generate consistent returns. Benefit from high APRs and avoid the risks of impermanent loss. No complex strategies required - the more you stake, the more you earn. Step into the future of DeFi and make your tokens work for you with our Staking Pools.'
-                  )}>
-                  <Text color="textSubtle" pl="6px">
-                    {t('Learn more')}
-                  </Text>
-                </QuestionHelper>
-              </Flex>
-              
-            </Flex>
+const Pools: React.FC<React.PropsWithChildren> = () => {
+  const { t } = useTranslation()
+  const { address: account } = useAccount()
+  const { pools, userDataLoaded } = usePoolsWithVault()
+
+  usePoolsPageFetch()
+
+  return (
+    <>
+      <PageHeader>
+        <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
+          <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
+            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
+              Pools
+            </Heading>
+            <Heading scale="md" color="text">
+              {t('Just stake some tokens to earn.')}
+            </Heading>
+            <Heading scale="md" color="text">
+              {t('High APR, low risk.')}
+            </Heading>
           </Flex>
-        </PageHeader>
+        </Flex>
+      </PageHeader>
       <Page>
         <PoolControls pools={pools}>
           {({ chosenPools, viewMode, stakedOnly, normalizedUrlSearch, showFinishedPools }) => (
+        
             <>
-          
+      
               {account && !userDataLoaded && stakedOnly && (
                 <Flex justifyContent="center" mb="4px">
                   <Loading />
@@ -81,35 +72,40 @@ const FinishedTextLink = styled(Link)`
               )}
 
 <CardLayout>
-                  {chosenPools.map((pool) =>
-                     <Pool.PoolCard<Token>
-                     key={pool.sousId}
-                     pool={pool}
-                     isStaked={Boolean(pool?.userData?.stakedBalance?.gt(0))}
-                     cardContent={
-                       account ? (
-                         <CardActions pool={pool} stakedBalance={pool?.userData?.stakedBalance} />
-                       ) : (
-                         <>
-                           <Text mb="10px" textTransform="uppercase" fontSize="12px" color="textSubtle" bold>
-                             {t('Start earning')}
-                           </Text>
-                           <ConnectWalletButton />
-                         </>
-                       )
-                     }
-                     tokenPairImage={
-                       <TokenPairImage
-                         primaryToken={pool.earningToken}
-                         secondaryToken={pool.stakingToken}
-                         width={64}
-                         height={64}
-                       />
-                     }
-                     cardFooter={<CardFooter pool={pool} account={account} />}
-                     aprRow={<AprRow pool={pool} stakedBalance={pool?.userData?.stakedBalance} />}
-                   />
-                  )}
+                {chosenPools.map((pool) => {
+                  console.log("chossedne",pool)
+                  if (pool.vaultKey) {
+                    return <CakeVaultCard key={pool.vaultKey} pool={pool} showStakedOnly={stakedOnly} />
+                  } 
+                  return    <Pool.PoolCard<Token>
+                  key={pool.sousId}
+                  pool={pool}
+                  isStaked={Boolean(pool?.userData?.stakedBalance?.gt(0))}
+                  cardContent={
+                    account ? (
+                      <CardActions pool={pool} stakedBalance={pool?.userData?.stakedBalance} />
+                    ) : (
+                      <>
+                        <Text mb="10px" textTransform="uppercase" fontSize="12px" color="textSubtle" bold>
+                          {t('Start earning')}
+                        </Text>
+                        <ConnectWalletButton />
+                      </>
+                    )
+                  }
+                  tokenPairImage={
+                    <TokenPairImage
+                      primaryToken={pool.earningToken}
+                      secondaryToken={pool.stakingToken}
+                      width={64}
+                      height={64}
+                    />
+                  }
+                  cardFooter={<CardFooter pool={pool} account={account} />}
+                  aprRow={<AprRow pool={pool} stakedBalance={pool?.userData?.stakedBalance} />}
+                />
+              
+                })}
                 </CardLayout>
 
               {/* {viewMode === ViewMode.CARD ? (
