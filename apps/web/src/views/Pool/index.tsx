@@ -112,8 +112,8 @@ export default function Pool() {
   return (
     <Page>
       <AppBody>
-        <AppHeader title={t('Your Liquidity')} subtitle={t('Remove liquidity to receive tokens back.')} />
-        <Flex justifyContent="center">
+      <AppHeader title={t('Your Liquidity')} subtitle={t('Remove liquidity to receive tokens back.')} />
+        <Flex justifyContent="center" px="16px"> 
           <Text color="textSubtle" mb="8px" mr="8px">
             {t('Delegate your tokens on the SGB network and start earning even before you supply liquidity.')}
           </Text>

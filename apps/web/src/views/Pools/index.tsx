@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { useAccount } from 'wagmi'
-import { Heading, Flex, Image, Text, Link, FlexLayout, PageHeader, Loading, Pool, ViewMode } from '@pancakeswap/uikit'
+import { Heading, Flex, Image, useTooltip, InfoIcon, Text, Link, FlexLayout, PageHeader, Loading, Pool, ViewMode } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { usePoolsPageFetch, usePoolsWithVault } from 'state/pools/hooks'
 import Page from 'components/Layout/Page'
@@ -34,30 +34,41 @@ const FinishedTextLink = styled(Link)`
   text-decoration: underline;
 `
 
-const Pools: React.FC<React.PropsWithChildren> = () => {
-  const { t } = useTranslation()
-  const { address: account } = useAccount()
-  const { pools, userDataLoaded } = usePoolsWithVault()
 
-  usePoolsPageFetch()
-
-  return (
-    <>
-      <PageHeader>
-        <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
-          <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
-            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-              Pools
-            </Heading>
-            <Heading scale="md" color="text">
-              {t('Just stake some tokens to earn.')}
-            </Heading>
-            <Heading scale="md" color="text">
-              {t('High APR, low risk.')}
-            </Heading>
+  const Pools: React.FC<React.PropsWithChildren> = () => {
+    const { t } = useTranslation()
+    const { address: account } = useAccount()
+    const { pools, userDataLoaded } = usePoolsWithVault()
+  
+    usePoolsPageFetch()
+  
+    return (
+      <>
+        <PageHeader>
+          <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
+            <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
+              <Heading as="h1" scale="xxl" color="secondary" mb="24px">
+               Staking Pools
+              </Heading>
+              <Heading scale="md" color="text">
+                {t('Just stake some tokens to earn.')}
+              </Heading>
+              <Heading scale="md" color="text">
+                {t('High APR, low risk.')}
+              </Heading>
+              <Flex alignItems="center" px="16px" py="8px">
+                <QuestionHelper text={t(
+                  'Maximize your earning potential effortlessly with our Staking Pools. Securely stake your tokens to generate consistent returns. Benefit from high APRs and avoid the risks of impermanent loss. No complex strategies required - the more you stake, the more you earn. Step into the future of DeFi and make your tokens work for you with our Staking Pools.'
+                  )}>
+                  <Text color="textSubtle" pl="6px">
+                    {t('Learn more')}
+                  </Text>
+                </QuestionHelper>
+              </Flex>
+              
+            </Flex>
           </Flex>
-        </Flex>
-      </PageHeader>
+        </PageHeader>
       <Page>
         <PoolControls pools={pools}>
           {({ chosenPools, viewMode, stakedOnly, normalizedUrlSearch, showFinishedPools }) => (
@@ -69,7 +80,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 </Flex>
               )}
 
-                <CardLayout>
+<CardLayout>
                   {chosenPools.map((pool) =>
                      <Pool.PoolCard<Token>
                      key={pool.sousId}

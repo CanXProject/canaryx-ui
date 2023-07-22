@@ -21,9 +21,9 @@ const Page: React.FC<
 }) => {
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
-  const isBSC = chainId === ChainId.BSC
-  const externalText = isBSC ? t('Bridge assets to BNB Chain') : ''
-  const externalLinkUrl = isBSC ? 'https://bridge.pancakeswap.finance/' : ''
+  const isSONGBIRD = chainId === ChainId.SONGBIRD
+  const externalText = isSONGBIRD ? t('Bridge assets to BNB Chain') : ''
+  const externalLinkUrl = isSONGBIRD? 'https://bridge.canaryx.finance/' : ''
 
   return (
     <>
