@@ -14,7 +14,7 @@ const fadeInAndGrow = keyframes`
 
 export const BodyWrapper = styled(Card)`
   border-radius: 10px;
-  max-width: 70%;
+  max-width: 100%;
   width: 100%;
   z-index: 1;
   animation: ${fadeInAndGrow} 0.6s ease-out;
