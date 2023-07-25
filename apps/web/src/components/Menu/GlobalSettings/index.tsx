@@ -6,6 +6,7 @@ type Props = {
   color?: string
   mr?: string
   mode?: string
+  shouldSpin?: boolean
 }
 
 // Define keyframes for spinning animation
@@ -23,16 +24,16 @@ const SpinningCogIcon = styled(CogIcon)`
   animation: ${spin} 2s linear infinite;
 `;
 
-const GlobalSettings = ({ color, mr = '8px', mode }: Props) => {
+const GlobalSettings = ({ color, mr = '8px', mode, shouldSpin = false }: Props) => {
   const [onPresentSettingsModal] = useModal(<SettingsModal mode={mode} />)
 
   const renderCogIcon = () => {
-    if (mode === "GLOBAL") {
-      // Render spinning icon for global mode
+    if (shouldSpin) {
+      // Render spinning icon if shouldSpin is true
       return <SpinningCogIcon height={24} width={24} color={color || 'settings'} />
     } 
-      // Render normal icon for other modes
-      return <CogIcon height={24} width={24} color={color || 'textSubtle'} />
+      // Render normal icon for other cases
+      return <CogIcon height={24} width={24} color={color || 'settings'} />
     
   }
 
