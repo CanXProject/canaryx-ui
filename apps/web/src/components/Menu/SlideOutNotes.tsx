@@ -122,19 +122,19 @@ const SlideOutNotes = () => {
                 <br />
 
                 <H1>Progress: UI Enhancements</H1>
-                <p>Our user interface is undergoing a gradual makeover for a smoother experience. Noticed some changes? There's more to come!</p>
+                <p>Our user interface is undergoing a gradual makeover for a smoother experience. Noticed some changes? There is more to come!</p>
                 <br />
 
                 <H1>In the Works: Price Charts</H1>
-                <p>We're busy crafting comprehensive price charts for an in-depth market overview. We'll let you know once it's ready!</p>
+                <p>We are busy crafting comprehensive price charts for an in-depth market overview. Well let you know once its ready!</p>
                 <br />
 
                 <H1>On the Horizon: Popup Notifications</H1>
-                <p>We're working on popup guides to make navigating our DEX even easier. These mini tutorials will walk you through our features for a seamless trading experience.</p>
+                <p>We are working on popup guides to make navigating our DEX even easier. These mini tutorials will walk you through our features for a seamless trading experience.</p>
                 <br />
 
                 <H1>Safety Alert: Verify Information</H1>
-                <p>Trading safety is a priority. Always double-check addresses and URLs. Let's make your trading journey secure.</p>
+                <p>Trading safety is a priority. Always double-check addresses and URLs. Let us make your trading journey secure.</p>
                 <br />
                 
                 <H1>Your Update Center: Accessible Anytime!</H1>
