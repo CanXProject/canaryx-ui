@@ -28,6 +28,8 @@ const StyledPanelContainer = styled.div<StyledPanelContainerProps>`
     transition: right 0.5s; // Transition effect for the slide
     border-radius: 10px; // Rounded corners
     box-shadow: ${props => props.isOpen ? `1px 25px 50px 0px ${props.theme.colors.shadow}` : "none"};
+    overflow: auto; /* Add a scrollbar when the content overflows */
+    max-height: 70vh; /* Set a max height. Adjust this value as needed */
     z-index: 999; // Set an appropriate value to ensure the panel appears above other elements
 
 

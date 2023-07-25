@@ -279,9 +279,20 @@ const CreateToken = () => {
                 Once you are done with the delegation, you can provide liquidity to earn even more.
               </Text>
               <Link href="https://app.canaryx.finance/liquidity?chain=songbird" >
-                <Button id="to-liquidity-link" variant="secondary" scale="sm">
-                  Go To Liquidity
-                </Button>
+              <Button 
+                id="to-liquidity-link" 
+                variant="secondary" 
+                scale="sm"
+                style={{
+                  minWidth: "120px", // Minimum button width
+                  width: "100%", // Button takes up all available space
+                  whiteSpace: "nowrap", // Prevents the text from breaking into a new line
+                  overflow: "hidden", // Hide the overflowed text
+                  textOverflow: "ellipsis", // Add '...' at the end of the text if it's too long
+                }}
+              >
+                Go To Liquidity
+              </Button>
               </Link>
             </Flex>
           </Left>

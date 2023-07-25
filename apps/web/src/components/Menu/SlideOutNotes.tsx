@@ -11,7 +11,7 @@ const PanelContent = styled.div`
     font-family: 'Poppins', sans-serif;
     color: ${props => props.theme.colors.text};
     line-height: 1.6;
-    background-color: ${props => props.theme.colors.background};
+    background-color: ${props => props.theme.colors.white};
 `;
 
 // Define a styled component for the H1s
@@ -47,6 +47,8 @@ const StyledPanelContainer = styled.div<StyledPanelContainerProps>`
     transition: right 0.5s; // Transition effect for the slide
     border-radius: 10px; // Rounded corners
     box-shadow: ${props => props.isOpen ? `1px 25px 50px 0px ${props.theme.colors.shadow}` : "none"};
+    overflow: auto; /* Add a scrollbar when the content overflows */
+    max-height: 70vh; /* Set a max height. Adjust this value as needed */
     z-index: 999; // Set an appropriate value to ensure the panel appears above other elements
 
 
@@ -91,7 +93,7 @@ const SlideOutNotes = () => {
                 style={{
                     position: "fixed", 
                     right: isOpen ? "40vw" : "0",
-                    top: "26%",
+                    top: `calc(20% + 53px)`, 
                     transform: "translateY(-0%)",
                     transition: "right 0.5s"
                 }}
