@@ -13,6 +13,8 @@ import { SettingsMode } from './GlobalSettings/types'
 import { useMenuItems } from './hooks/useMenuItems'
 import UserMenu from './UserMenu'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
+import SlideOutPanel from './SlideOutPanel'
+import SlideOutNotes from './SlideOutNotes'
 
 const Menu = (props) => {
   const { isDark, setTheme } = useTheme()
@@ -45,7 +47,7 @@ const Menu = (props) => {
         }}
         rightSide={
           <>
-            <GlobalSettings mode={SettingsMode.GLOBAL} />
+            <GlobalSettings mode={SettingsMode.GLOBAL} /> 
             <NetworkSwitcher />
             <UserMenu />
           </>
@@ -66,6 +68,8 @@ const Menu = (props) => {
         buyCakeLink="/swap?outputCurrency=0xB2cD91b79df296ea181AA5f6d729E5136e1853A4"
         {...props}
       />
+  <SlideOutPanel /> {/* This will make the SlideOutPanel visible on all pages that include Menu */}
+  <SlideOutNotes /> {/* This will make the SlideOutNotes visible on all pages that include Menu */}
     </>
   )
 }

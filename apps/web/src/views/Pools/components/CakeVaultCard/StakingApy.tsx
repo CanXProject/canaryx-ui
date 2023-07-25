@@ -13,12 +13,12 @@ const AprLabelContainer = styled(Flex)`
     opacity: 0.5;
   }
 `
-
 export const StakingApy = memo(({ pool }: { pool: Pool.DeserializedPool<Token> }) => {
   const { t } = useTranslation()
 
-  const { flexibleApy } = useVaultApy()
 
+const { flexibleApy } = useVaultApy()
+  //  const { flexibleApy, lockedApy } = useVaultApy(); 
   // console.log({ lockedApy,flexibleApy})
   const [onPresentFlexibleApyModal] = useModal(<VaultRoiCalculatorModal pool={pool} />)
 

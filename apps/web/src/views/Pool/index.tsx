@@ -10,7 +10,7 @@ import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
 import Dots from '../../components/Loader/Dots'
-import { AppHeader, AppBody } from '../../components/App'
+import { AppHeader, LiquidityWrapper } from '../../components/App'
 import Page from '../Page'
 
 const Body = styled(CardBody)`
@@ -111,7 +111,7 @@ export default function Pool() {
 
   return (
     <Page>
-      <AppBody>
+      <LiquidityWrapper>
       <AppHeader title={t('Your Liquidity')} subtitle={t('Remove liquidity to receive tokens back.')} />
         <Flex justifyContent="center" px="16px"> 
           <Text color="textSubtle" mb="8px" mr="8px">
@@ -145,7 +145,7 @@ export default function Pool() {
             </Button>
           </Link>
         </CardFooter>
-      </AppBody>
+      </LiquidityWrapper>
     </Page>
   )
 }
