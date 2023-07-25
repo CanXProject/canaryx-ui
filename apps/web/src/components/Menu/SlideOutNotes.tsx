@@ -91,7 +91,7 @@ const SlideOutNotes = () => {
                 style={{
                     position: "fixed", 
                     right: isOpen ? "40vw" : "0",
-                    top: "25%",
+                    top: "26%",
                     transform: "translateY(-0%)",
                     transition: "right 0.5s"
                 }}
