@@ -11,7 +11,7 @@ const PanelContent = styled.div`
     font-family: 'Poppins', sans-serif;
     color: ${props => props.theme.colors.text};
     line-height: 1.6;
-    background-color: ${props => props.theme.colors.white};
+    background-color: ${props => props.theme.colors.backgroundDisabled};
 `;
 
 // Define a styled component for the H1s
@@ -46,7 +46,7 @@ const StyledPanelContainer = styled.div<StyledPanelContainerProps>`
     background-color: ${props => props.theme.colors.backgroundDisabled}; // Background color from theme
     transition: right 0.5s; // Transition effect for the slide
     border-radius: 10px; // Rounded corners
-    box-shadow: ${props => props.isOpen ? `1px 25px 50px 0px ${props.theme.colors.shadow}` : "none"};
+    box-shadow: ${props => props.isOpen ? `4px 1px 35px 1px ${props.theme.colors.shadow}` : "none"};
     overflow: auto; /* Add a scrollbar when the content overflows */
     max-height: 70vh; /* Set a max height. Adjust this value as needed */
     z-index: 999; // Set an appropriate value to ensure the panel appears above other elements
@@ -59,7 +59,56 @@ const StyledPanelContainer = styled.div<StyledPanelContainerProps>`
     }
 `;
 
-const SlideOutNotes = () => {
+
+// Define content for different pages
+const pageContents = {
+    home: (
+      <>
+        <PanelContent>
+            <H1>CanaryX Swap Notifications: Real-Time Updates</H1>
+            <p>Welcome to the CanaryX Swap Notification Center, the hub for all real-time updates and key information.</p>
+            <br />
+
+            <H1>Progress: UI Enhancements</H1>
+            <p>Our user interface is undergoing a gradual makeover for a smoother experience. Noticed some changes? There is more to come!</p>
+            <br />
+
+            <H1>In the Works: Price Charts</H1>
+            <p>We are busy crafting comprehensive price charts for an in-depth market overview. Well let you know once its ready!</p>
+            <br />
+
+            <H1>On the Horizon: Popup Notifications</H1>
+            <p>We are working on popup guides to make navigating our DEX even easier. These mini tutorials will walk you through our features for a seamless trading experience.</p>
+            <br />
+
+            <H1>Safety Alert: Verify Information</H1>
+            <p>Trading safety is a priority. Always double-check addresses and URLs. Let us make your trading journey secure.</p>
+            <br />
+            
+            <H1>Your Update Center: Accessible Anytime!</H1>
+            <p>This Notification Center is at your fingertips on every page of our DEX. No sign-ups, no fuss, just timely CanaryX Swap updates and news.</p>
+
+        </PanelContent>
+      </>
+    ),
+    about: (
+      <>
+        <PanelContent>
+          <H1>About Us</H1>
+          <p>This is the content for the About page.</p>
+        </PanelContent>
+      </>
+    ),
+    contact: (
+      <>
+        <PanelContent>
+          <H1>Contact Us</H1>
+          <p>This is the content for the Contact page.</p>
+        </PanelContent>
+      </>
+    ),
+  };
+  const SlideOutNotes = ({ currentPage }) => {
     // Define state variable to track whether the panel is open
     const [isOpen, setIsOpen] = useState(false)
 
@@ -113,38 +162,10 @@ const SlideOutNotes = () => {
             
             {/* Panel container */}
             {/* Here, we use the StyledPanelContainer and pass isOpen and theme as props */}
-            <StyledPanelContainer isOpen={isOpen} theme={theme}>
-                {/* Panel content */}
-                {/* The panel content is only rendered when the panel is open */}
-                {isOpen && (
-                    
-                <PanelContent>
-                <H1>CanaryX Swap Notifications: Real-Time Updates</H1>
-                <p>Welcome to the CanaryX Swap Notification Center, the hub for all real-time updates and key information.</p>
-                <br />
-
-                <H1>Progress: UI Enhancements</H1>
-                <p>Our user interface is undergoing a gradual makeover for a smoother experience. Noticed some changes? There is more to come!</p>
-                <br />
-
-                <H1>In the Works: Price Charts</H1>
-                <p>We are busy crafting comprehensive price charts for an in-depth market overview. Well let you know once its ready!</p>
-                <br />
-
-                <H1>On the Horizon: Popup Notifications</H1>
-                <p>We are working on popup guides to make navigating our DEX even easier. These mini tutorials will walk you through our features for a seamless trading experience.</p>
-                <br />
-
-                <H1>Safety Alert: Verify Information</H1>
-                <p>Trading safety is a priority. Always double-check addresses and URLs. Let us make your trading journey secure.</p>
-                <br />
-                
-                <H1>Your Update Center: Accessible Anytime!</H1>
-                <p>This Notification Center is at your fingertips on every page of our DEX. No sign-ups, no fuss, just timely CanaryX Swap updates and news.</p>
-                </PanelContent>
-
-                )}
-            </StyledPanelContainer>
+      <StyledPanelContainer isOpen={isOpen} theme={theme}>
+        {/* Panel content */}
+        {isOpen && pageContents[currentPage]}
+      </StyledPanelContainer>
         </>
     )
 }

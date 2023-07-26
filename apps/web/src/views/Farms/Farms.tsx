@@ -61,13 +61,19 @@ const ControlContainer = styled.div`
   flex-direction: column;
   margin-bottom: 32px;
   border-radius: 10px;
-  animation: ${fadeInFromRight} 1.5s ease-in forwards;
+  opacity: 0; // this line makes the component initially invisible
+  transition: opacity 2s ease-in-out 2s; // this line gradually changes the opacity after 1s delay
+  animation: ${fadeInFromRight} 1s ease-in forwards;
+  animation-delay: 1s;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     flex-direction: row;
     flex-wrap: wrap;
     padding: 16px 32px;
     margin-bottom: 0;
+    opacity: 0; // this line makes the component initially invisible
+  transition: opacity 2s ease-in-out 2s; // this line gradually changes the opacity after 1s delay
+
   }
 
   &::before {
@@ -81,7 +87,8 @@ const ControlContainer = styled.div`
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     border-radius: 10px;
-    z-index: -1;
+    z-index: -1
+    transition: opacity 2s ease-in-out 2s; // this line gradually changes the opacity after 1s delay;
   }
 
   &:hover::before {
@@ -101,6 +108,7 @@ const FarmH1 = styled(Heading)`
   ${({ theme }) => theme.mediaQueries.sm} {
     font-size: 48px;
     margin-bottom: 24px;
+    
   }
 `
 const FarmH2 = styled(Heading)`

@@ -69,7 +69,7 @@ const Menu = (props) => {
         {...props}
       />
   <SlideOutPanel /> {/* This will make the SlideOutPanel visible on all pages that include Menu */}
-  <SlideOutNotes /> {/* This will make the SlideOutNotes visible on all pages that include Menu */}
+  <SlideOutNotes currentPage="home" /> {/* This will make the SlideOutNotes visible on all pages that include Menu */}
     </>
   )
 }
