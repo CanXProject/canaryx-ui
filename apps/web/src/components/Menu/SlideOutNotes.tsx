@@ -1,6 +1,5 @@
 // Import necessary dependencies
 import styled, { ThemeContext } from 'styled-components'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import React, { useState, useEffect, useContext } from 'react'
 import SlideOutTriggerNotes from './SlideOutTriggerNotes'
 import SlidePanelSettings from './SlidePanelSettings'
