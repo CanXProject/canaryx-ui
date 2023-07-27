@@ -24,12 +24,23 @@ export const styleVariants = {
   },
   [variants.SECONDARY]: {
     backgroundColor: "transparent",
-    border: "2px solid",
-    borderColor: "primary",
-    boxShadow: "none",
+    backgroundImage: "linear-gradient(to bottom, #f2f2f2, #c4c4c4)",
+    border: "none", // Removed border
+    boxShadow: "0 2px 3px 0 rgba(0,0,0,0.35)", // Further reduced spread, increased intensity
     color: "primary",
+    transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+    ":hover:not(:disabled)": {
+      transform: "translateY(-1px)",
+      boxShadow: "0 3px 5px 0 rgba(0,0,0,0.35)", // Reduced spread, intensity remains the same
+    },
+    ":active:not(:disabled)": {
+      transform: "translateY(0)",
+      boxShadow: "0 2px 3px 0 rgba(0,0,0,0.35)", // Reduced spread, intensity remains the same
+    },
     ":disabled": {
       backgroundColor: "transparent",
+      backgroundImage: "none",
+      boxShadow: "none",
     },
   },
   [variants.TERTIARY]: {
