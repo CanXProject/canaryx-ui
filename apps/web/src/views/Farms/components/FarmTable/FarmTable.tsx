@@ -35,7 +35,7 @@ const Container = styled.div`
   background: ${({ theme }) => theme.card.background};
   border-radius: 10px;
   margin: 16px 0px;
-  border: 2px solid ${({ theme }) => theme.colors.cardBorder};
+  border: 0px solid ${({ theme }) => theme.colors.cardBorder};
   animation: ${fadeInFromBottom} 1.5s ease-out;
   box-shadow:  5px 11px 90px -36px ${({ theme }) => theme.colors.shadow};  // outer shadow giving a recessed effect
 `

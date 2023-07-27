@@ -153,7 +153,7 @@ const pageContents = {
         <Blockquote>
           <H3>Remember, as with all crypto transactions, do your due diligence before swapping tokens:</H3>
           <br />
-          Verify the contract address of the token you're about to swap.
+          Verify the contract address of the token you&apos;re about to swap.
           <br />
           Ensure you have a firm understanding of transaction fees, slippage, and any transfer taxes.
           <br />
@@ -173,7 +173,7 @@ const pageContents = {
         <br />
 
         <H2>In the Works: Price Charts</H2>
-        <ListItem>We are busy crafting comprehensive price charts for an in-depth market overview. We'll let you know once it's ready!</ListItem>
+        <ListItem>We are busy crafting comprehensive price charts for an in-depth market overview. We&apos;ll let you know once it&apos;s ready!</ListItem>
         <br />
 
         <H2>On the Horizon: Popup Notifications</H2>
@@ -385,7 +385,7 @@ const SlideOutNotes = ({ currentPage }) => {
       <StyledPanelContainer isOpen={isOpen} theme={theme}>
         {/* Panel content */}
         {isOpen && (pageContents[currentPage] || pageContents.swap)}
-
+ 
       </StyledPanelContainer>
     </>
   )
