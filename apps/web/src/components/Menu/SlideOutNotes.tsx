@@ -26,7 +26,7 @@ const H1 = styled.h2`
   box-shadow: inset 2px 2px 5px ${({ theme }) => theme.colors.slideShadow}, 
               inset -2px -2px 5px ${({ theme }) => theme.colors.slideBackground1};
   border-radius: 6px;
-  border-left: 4px solid ${({ theme }) => theme.colors.secondary};
+  border-left: 4px solid ${({ theme }) => theme.colors.secondary80};
   transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 
   &:hover {
@@ -39,12 +39,13 @@ const H1 = styled.h2`
 
 const H2 = styled.h3`
   font-size: 1.2em;
-  color: ${({ theme }) => theme.colors.textSlide};
+  color: ${({ theme }) => theme.colors.primary};
   margin-bottom: 0.5em;
   padding: 10px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 1px 1px 3px ${({ theme }) => theme.colors.slideShadow}, 
-              inset -1px -1px 3px ${({ theme }) => theme.colors.slideBackground1};
+  color: ${({ theme }) => theme.colors.primary};
+  box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
+              -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
   border-radius: 6px;
   transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 
@@ -81,7 +82,7 @@ const Blockquote = styled.blockquote`
   background-color: ${({ theme }) => theme.colors.backgroundAlt2};
   box-shadow: inset 2px 2px 5px ${({ theme }) => theme.colors.slideShadow}, 
               inset -2px -2px 5px ${({ theme }) => theme.colors.slideBackground1};
-  border-left: 4px solid ${({ theme }) => theme.colors.secondary80};
+  border-left: 4px solid ${({ theme }) => theme.colors.failure};
   color: ${({ theme }) => theme.colors.textSlide};
   font-style: italic;
   border-radius: 6px;
