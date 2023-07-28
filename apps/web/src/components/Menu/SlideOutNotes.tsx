@@ -63,8 +63,7 @@ const H3 = styled.h4`
   margin-bottom: 0.5em;
   padding: 10px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 1px 1px 3px ${({ theme }) => theme.colors.slideShadow}, 
-              inset -1px -1px 3px ${({ theme }) => theme.colors.slideBackground1};
+  
   border-radius: 6px;
   transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 
