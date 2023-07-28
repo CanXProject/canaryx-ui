@@ -46,6 +46,42 @@ import { AtomBox } from '@pancakeswap/ui'
 import { BigNumber } from 'ethers';
 import Delegate from 'views/Delegate';
 
+
+const StyledDropdown = styled(Dropdown)`
+.Dropdown-control {
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.slideBackground1};
+  border: none;
+  box-shadow: inset 0px 1px 4px ${({ theme }) => theme.colors.slideShadow};
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: inset 0px 1px 2px ${({ theme }) => theme.colors.slideShadow};
+  }
+
+  &:active {
+    box-shadow: inset 0px 1px 1px ${({ theme }) => theme.colors.slideShadow};
+  }
+
+  &.is-disabled, &[disabled] {
+    background-color: #e2e2e2;
+    box-shadow: none;
+  }
+}
+`;
+
+const StyledCardBody = styled(CardBody)`
+
+
+border: none;
+border-radius: 8px;
+box-shadow: inset 0px 2px 16px ${({ theme }) => theme.colors.slideShadow}; // Sunken effect
+transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+}
+}
+`;
+
 const StyledHeader = styled(PageHeader)`
   max-height: max-content;
   margin-bottom: -40px;
@@ -325,7 +361,7 @@ const CreateToken = () => {
                   </Heading>
                 </CardHeader>
 
-                <CardBody>
+                <StyledCardBody>
 
 
                   <div style={{ display: isMobile ? "block" : "flex", justifyContent: "space-between" }}>
@@ -363,7 +399,7 @@ const CreateToken = () => {
 
                       <Box mb="24px">
                         <SecondaryLabel>Choose Your Data Provider:</SecondaryLabel>
-                        <Dropdown options={getDropdownOptions()} onChange={(item: Option) => {
+                        <StyledDropdown options={getDropdownOptions()} onChange={(item: Option) => {
                           if (item && item.value) {
                             setDelegationAddress(item?.value)
                           }
@@ -492,7 +528,7 @@ const CreateToken = () => {
                         </tbody>
                       </Table>
 
-                        </CardBody>
+                        
                         <CardFooter>
                         <Button  variant="secondary" scale="sm"
                           type="submit"
@@ -510,7 +546,7 @@ const CreateToken = () => {
 
 
 
-                        <Button  scale="sm"
+                        <Button  variant="secondary" scale="sm"
                           type="submit"
                           width="100%"
                           disabled={Number.isNaN(Number(pendingReward))}
@@ -523,7 +559,7 @@ const CreateToken = () => {
                         >
                           Claim your delegation rewards {pendingReward &&  pendingReward  } SGB
                         </Button>
-                        </CardFooter>
+                        </CardFooter></CardBody>
                       </Card>
                
 }
@@ -535,7 +571,7 @@ const CreateToken = () => {
                   </div>
 
                   {!account && <ConnectWalletButton width="100%" type="button" />}
-                </CardBody>
+                </StyledCardBody>
               </Card>
 
             </Box>

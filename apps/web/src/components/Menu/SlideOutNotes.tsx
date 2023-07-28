@@ -7,84 +7,111 @@ import SlidePanelSettings from './SlidePanelSettings'
 // Define a styled component for the content of the panel
 // This will allow you to add styling to the content easily
 const PanelContent = styled.div`
-    padding: 30px; /* Add padding to content */
-    font-family: 'Poppins', sans-serif;
-    color: ${props => props.theme.colors.text};
-    line-height: 1.6;
-    background-color: ${props => props.theme.colors.backgroundDisabled};
+  padding: 30px;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  line-height: 1.6;
+  background-color: ${({ theme }) => theme.colors.slideOut};
+  border-radius: 8px;
 `;
 
 const H1 = styled.h2`
-    font-size: 1.5em;
-    color: ${props => props.theme.colors.primary};
-    margin-bottom: 0.5em;
-    border-bottom: 1px solid ${props => props.theme.colors.secondary};
-    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add the shadow effect */
-    text-indent: 5px;
-    &:hover {
-        color: ${props => props.theme.colors.secondary};
-        transform: scale(1.01); /* Add the smooth zoom effect */
-        
-    }
+  font-size: 1.5em;
+  color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.backgroundAlt2};
+  margin-bottom: 0.5em;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 2px 2px 5px ${({ theme }) => theme.colors.slideShadow}, 
+              inset -2px -2px 5px ${({ theme }) => theme.colors.slideBackground1};
+  border-radius: 6px;
+  border-left: 4px solid ${({ theme }) => theme.colors.secondary};
+  transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.secondary};
+    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
+                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
+    transform: scale(1.01);
+  }
 `;
 
 const H2 = styled.h3`
-    font-size: 1.2em;
-    color: ${props => props.theme.colors.contrast};
-    margin-bottom: 0.5em;
-    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add the shadow effect */
-    text-indent: 10px;
+  font-size: 1.2em;
+  color: ${({ theme }) => theme.colors.textSlide};
+  margin-bottom: 0.5em;
+  padding: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 1px 3px ${({ theme }) => theme.colors.slideShadow}, 
+              inset -1px -1px 3px ${({ theme }) => theme.colors.slideBackground1};
+  border-radius: 6px;
+  transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 
-    &:hover {
-        color: ${props => props.theme.colors.primary};
-        transform: scale(1.01); /* Add the smooth zoom effect */
-       
-    }
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
+                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
+    transform: scale(1.01);
+  }
 `;
 
 const H3 = styled.h4`
-    font-size: 1.1em;
-    color: ${props => props.theme.colors.text};
-    margin-bottom: 0.5em;
-    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+  font-size: 1.1em;
+  color: ${({ theme }) => theme.colors.textSlide};
+  margin-bottom: 0.5em;
+  padding: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 1px 3px ${({ theme }) => theme.colors.slideShadow}, 
+              inset -1px -1px 3px ${({ theme }) => theme.colors.slideBackground1};
+  border-radius: 6px;
+  transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 
-    &:hover {
-        color: ${props => props.theme.colors.text99};
-        transform: scale(1.01); /* Add the smooth zoom effect */
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add the shadow effect */
-    }
+  &:hover {
+    color: ${({ theme }) => theme.colors.textSlide};
+    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
+                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
+    transform: scale(1.01);
+  }
 `;
 
 const Blockquote = styled.blockquote`
-    margin: 1em 0;
-    padding: 10px;
-    background-color: ${props => props.theme.colors.backgroundAlt2};
-  secondary80: '#9A6AFF80',
-    border-left: 4px solid ${props => props.theme.colors.secondary80};
-    color: ${props => props.theme.colors.text};
-    font-style: italic;
-    transition: transform 0.3s, box-shadow 0.3s;
+  margin: 1em 0;
+  padding: 10px;
+  background-color: ${({ theme }) => theme.colors.backgroundAlt2};
+  box-shadow: inset 2px 2px 5px ${({ theme }) => theme.colors.slideShadow}, 
+              inset -2px -2px 5px ${({ theme }) => theme.colors.slideBackground1};
+  border-left: 4px solid ${({ theme }) => theme.colors.secondary80};
+  color: ${({ theme }) => theme.colors.textSlide};
+  font-style: italic;
+  border-radius: 6px;
+  transition: transform 0.3s, box-shadow 0.3s;
 
-    &:hover {
-        transform: scale(1.01); /* Add the smooth zoom effect */
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add the shadow effect */
-    }
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
+                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
+  }
 `;
 
 const ListItem = styled.li`
-    margin-bottom: 0.25em;
-    line-height: 1.4;
-    list-style-type: none; /* Remove bullet points from list items */
-    padding-left: 20px; 
-    transition: transform 0.3s, box-shadow 0.3s;
+  margin-bottom: 0.25em;
+  line-height: 1.4;
+  list-style-type: none;
+  padding: 10px;
+  color: ${({ theme }) => theme.colors.textSlide};
+  box-shadow: inset 1px 1px 3px ${({ theme }) => theme.colors.slideShadow}, 
+              inset -1px -1px 3px ${({ theme }) => theme.colors.slideBackground1};
+  border-radius: 6px;
+  transition: transform 0.3s, box-shadow 0.3s;
 
-    &:hover {
-        transform: scale(1.01); /* Add the smooth zoom effect */
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add the shadow effect */
-    }
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
+                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
+  }
 `;
+
 const BulletList = styled.ul`
     list-style-type: disc;
     padding-left: 20px;
@@ -160,6 +187,7 @@ const pageContents = {
           Make sure to double-check all transaction details before confirming.
           <br />
         </Blockquote>
+        <br /><br />
 
         <H1>CanaryX Swap Notifications: Real-Time Updates</H1>
         <br />
