@@ -7,6 +7,8 @@ const Wrapper = styled(CardHeader)<{ isFinished?: boolean; background: string }>
   background: ${({ isFinished, background, theme }) =>
     isFinished ? theme.colors.backgroundDisabled : getThemeValue(theme, `colors.${background}`)};
   border-radius: ${({ theme }) => `${theme.radii.card} ${theme.radii.card} 0 0`};
+  box-shadow: ${({ theme }) => theme.isDark ? 'inset -7px -7px 10px rgba(23, 22, 26, 0.37)' : 'inset -7px -7px 10px rgba(70, 80, 92, 0.1)'};
+
 `;
 
 export const PoolCardHeader: React.FC<
@@ -31,10 +33,10 @@ export const PoolCardHeaderTitle: React.FC<
 > = ({ isFinished, title, subTitle }) => {
   return (
     <Flex flexDirection="column">
-      <Heading color={isFinished ? "textDisabled" : "body"} scale="lg">
+      <Heading color={isFinished ? "textDisabled" : "body"} scale="lg" style={{ fontWeight: 'bold' }}>  {/* Clean, large typography */}
         {title}
       </Heading>
-      <Text fontSize="14px" color={isFinished ? "textDisabled" : "textSubtle"}>
+      <Text fontSize="16px" color={isFinished ? "textDisabled" : "textSubtle"}> {/* Larger subtitle for modern look */}
         {subTitle}
       </Text>
     </Flex>

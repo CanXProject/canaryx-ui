@@ -37,7 +37,7 @@ export const StyledPriceChart = styled(Box) <{
       // If dark theme is active, adjust these shadow colors
       '12px 12px 24px rgba(21,21,21), -8px -8px 16px rgba(81,80,87)' :
       // If light theme is active, adjust these shadow colors
-      '12px 12px 24px rgba(0, 0, 0, 0.3), -8px -8px 16px rgba(255, 255, 255, 1)')
+      '12px 12px 24px rgba(0, 0, 0, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.48)')
 };
 
 
