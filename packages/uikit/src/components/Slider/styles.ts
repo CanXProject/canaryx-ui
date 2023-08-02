@@ -56,9 +56,7 @@ export const SliderLabel = styled(Text)<SliderLabelProps>`
   color: transparent; // Hide the text on the main element
   transition: transform 0.9s ease; // Silky smooth movement
   
-  &:hover, &.clicked {
-    transform: scale(1.1); // Hover effect
-  }
+ 
 
   & span { // Style for the inner text element
     position: absolute;
@@ -135,18 +133,12 @@ export const BarBackground = styled.div<{ darkTheme?: boolean }>`
 `;
 
 
-// BarProgress represents the actual progress of the slider, which will cover the BarBackground.
-interface BarProgressProps extends DisabledProp {
-  progress: string; // Progress percentage, like "50%"
-}
 
-export const BarProgress = styled.div<BarProgressProps>`
-  background: ${({ disabled, theme }) => (
-    disabled
-      ? `url(${theme.isDark ? barSlotD : barSlot})`
-      : `url(${theme.isDark ? barProgressD : barProgress})`
-  )} no-repeat left center; // Adjust as needed
-  background-size: ${({ progress }) => progress}; // Set the width of the visible background image
+
+export const BarProgress = styled.div`
+  background: ${({ theme }) => 
+    `url(${theme.isDark ? barProgressD : barProgress})`
+  } no-repeat left center; // Adjust as needed
   height: 10px;
   max-width: 100%;
   left: 0px;
@@ -155,4 +147,3 @@ export const BarProgress = styled.div<BarProgressProps>`
   z-index: 2; // Above BarBackground to cover it based on the progress
   width: 100%; // Full width of the slider
 `;
-

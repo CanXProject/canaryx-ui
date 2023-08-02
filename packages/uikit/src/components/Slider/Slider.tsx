@@ -48,7 +48,7 @@ const Slider: React.FC<React.PropsWithChildren<SliderProps>> = ({
      
       <BunnySlider>
         <BarBackground />
-        <BarProgress style={{ width: progressWidth }}  />
+        <BarProgress style={{ width: progressWidth }} />
         <StyledInput
           name={name}
           type="range"
