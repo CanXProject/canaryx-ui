@@ -19,7 +19,7 @@ import {
   CardFooter,
   Td,
 } from '@pancakeswap/uikit'
-import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect'
 
 import { useAccount } from 'wagmi'
 import { useTranslation } from '@pancakeswap/localization'
@@ -28,8 +28,8 @@ import { AppBody } from 'components/App'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { SecondaryLabel, FormError } from 'views/Voting/CreateProposal/styles'
 import { useEffect, useState } from 'react'
-import Dropdown, { Option } from 'react-dropdown';
-import 'react-dropdown/style.css';
+import Dropdown, { Option } from 'react-dropdown'
+import 'react-dropdown/style.css'
 
 import useTokenBalance, { useGetBnbBalance } from 'hooks/useTokenBalance'
 
@@ -37,50 +37,89 @@ import { formatEther, parseUnits } from '@ethersproject/units'
 import { getBalanceNumber } from '@pancakeswap/utils/formatBalance'
 import { getContract } from 'utils/contractHelpers'
 import { useContract } from 'hooks/useContract'
-import WSGBABI from "config/abi/wsgb.json";
-import ftsoABI from "config/abi/ftsoABI.json";
+import WSGBABI from 'config/abi/wsgb.json'
+import ftsoABI from 'config/abi/ftsoABI.json'
 
 import { PercentSlider } from '@pancakeswap/uikit/src/widgets/Liquidity'
 import FlexRow from 'views/Predictions/components/FlexRow'
 import { AtomBox } from '@pancakeswap/ui'
-import { BigNumber } from 'ethers';
-import Delegate from 'views/Delegate';
-
+import { BigNumber } from 'ethers'
+import Delegate from 'views/Delegate'
 
 const StyledDropdown = styled(Dropdown)`
 .Dropdown-control {
-  border-radius: 8px;
-  background-color: ${({ theme }) => theme.colors.slideBackground1};
+  display: block;
+  width: 100%;
+  padding: 5px;
   border: none;
-  box-shadow: inset 0px 1px 4px ${({ theme }) => theme.colors.slideShadow};
-  transition: box-shadow 0.2s ease-in-out;
+  background: none;
+  color: ${({ theme }) => (theme.isDark ? '#5b5b5b' : '#d3d4d9')};
+  border-radius: 5px;
+  box-shadow: inset 4px 6px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+              inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}; 
+  &:focus {
+      outline: none;
+      box-shadow: inset 2px -2px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+                  inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}, 
+                  0 0 5px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#6c757d')}; 
 
-  &:hover {
-    box-shadow: inset 0px 1px 2px ${({ theme }) => theme.colors.slideShadow};
-  }
+ & .Dropdown-menu {
+      background: ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')} !important;
+    }
+  `
 
-  &:active {
-    box-shadow: inset 0px 1px 1px ${({ theme }) => theme.colors.slideShadow};
-  }
+const StyledCardHeader = styled(CardHeader)`
+  border: none;
+  box-shadow: 0px 2px 16px ${({ theme }) => theme.colors.slideShadow};
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+`
 
-  &.is-disabled, &[disabled] {
-    background-color: #e2e2e2;
-    box-shadow: none;
-  }
-}
-`;
+const StyledCard = styled(Card)`
+  border: none;
+  border-radius: 16px;
+`
+
+const LabelInputContainer = styled.div`
+  position: relative;
+  padding: 10px;
+`
+
+const StyledSecondaryLabel = styled(SecondaryLabel)`
+  position: absolute;
+  top: -15px;
+  left: 5px;
+  padding: 10px 10px;
+  color: ${({ theme }) => (theme.isDark ? '#d2d2d2' : '#919a9f')};
+  font-size: 14px;
+  z-index: 1;
+  border-radius: 5px;
+`
+
+const StyledInput = styled.input`
+    display: block;
+    width: 100%;
+    padding: 5px 5px 5px 20px; /* Adjust the left padding here */
+    border: none;
+    background: none;
+    
+    color: ${({ theme }) => (theme.isDark ? '#5b5b5b' : '#d3d4d9')};
+    border-radius: 5px;
+    box-shadow: inset 4px 6px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+                inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}; 
+    &:focus {
+        outline: none;
+        box-shadow: inset 2px -2px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+                    inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}, 
+                    0 0 5px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#6c757d')}; 
+`
 
 const StyledCardBody = styled(CardBody)`
-
-
-border: none;
-border-radius: 8px;
-box-shadow: inset 0px 2px 16px ${({ theme }) => theme.colors.slideShadow}; // Sunken effect
-transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-
-}
-}
-`;
+  border: none;
+  color: ${({ theme }) => (theme.isDark ? '#d2d2d2' : '#919a9f')};
+  background-color: ${({ theme }) => (theme.isDark ? '#3c3f41' : '#f8f9fa')};
+  border-radius: 0px;
+  box-shadow: inset 0px 2px 16px ${({ theme }) => theme.colors.slideShadow}; // Sunken effect
+`
 
 const StyledHeader = styled(PageHeader)`
   max-height: max-content;
@@ -116,32 +155,108 @@ const Right = styled(Flex)`
   }
 `
 
-const ftsoProviders = [{ "name": "Bifrost Oracle", "address": "0x69141E890F3a79cd2CFf552c0B71508bE23712dC" }, { "name": "ScandiNodes FTSO", "address": "0x4ed9e5b82CE66311Ac2230D2FCCc5202D7B8c083" }, { "name": "Aureus Ox", "address": "0x6d323e71E141cE2d7b752313C8A654a9C9d1b377" }, { "name": "AlphaOracle", "address": "0xBF61Db1CDb43d196309824473fA82E5B17581159" }, { "name": "FTSO EU", "address": "0x010a16c53F33E4d93892f00897965578b55a8CFC" }, { "name": "FTSO UK", "address": "0xB9b7355f5b71CEE345311921D247b1D2bA5cFe90" }, { "name": "FTSO AU", "address": "0x499017ADB21D6f70480E4E6224cf4144071C1461" }, { "name": "Use Your Spark", "address": "0x53CAEDDA4339eD74272ECfEF85b657dEf18fA2e4" }, { "name": "Sun-Dara", "address": "0x7394923453FC2F606cfb4D0ea1A5438BB8260D08" }, { "name": "Lena Instruments", "address": "0xc9AC8F034d295962A6a975b717B691437605Bbb6" }, { "name": "A-FTSO", "address": "0x2d7bf53ED6117aD1DCD6416d460481522a16aFdf" }, { "name": "Defi Oracles", "address": "0xCa60cd408A5E447897258cDB1F699478c71Cc55E" }, { "name": "uGaenn", "address": "0xb53D69B2519aC9F6D65cff8e7824Bf09F7064D61" }, { "name": "AFOracle", "address": "0x9565d813a3a0CEa62B3bDB9A4e236dCb5910c4f0" }, { "name": "FTSOExpress", "address": "0x33DDAe234e403789954CD792e1feBdBE2466ADC2" }, { "name": "HEWG", "address": "0x819eaB111BD9A6E595187A914240529D2EFfF21f" }, { "name": "FTSO Plus", "address": "0x0FA72D3912d1C530AB1f6a8A9fB61C672947E964" }, { "name": "Flare Oracle", "address": "0x1B00870092a929D160492daf8E734b4bCA033266" }, { "name": "HONO-TSO", "address": "0xa467ACeE8127C55Fb1f4d3b863EA5b0C4F599b9b" }, { "name": "Scintilla", "address": "0xE70d5351a842131c66AAeBC4bD604912BF3cBa72" }, { "name": "LightFTSO", "address": "0xfB9197720329a80191BA140844E96DCcAD149014" }, { "name": "Oracle Daemon", "address": "0x92D6c2E99d5959F2e9c0a7aba5149D8A5ef22f23" }, { "name": "Dione", "address": "0x285430390a72Ce038f6e54BF10f24B94A550474f" }, { "name": "FlareFTSO", "address": "0x4F7f5F8eF4a3CC11f94e875393Ee909Eb5f824ea" }, { "name": "African Proofs", "address": "0xaF31CA175bbE0C6dD667c8403B65a33b28238afa" }, { "name": "FlareFi", "address": "0x5f3C5991De3F0713715a733eE125785D516cEb16" }, { "name": "WitterFTSO", "address": "0xD9200CC419BDe28B169AD8c904d2687a15A4Bf9F" }, { "name": "4DadsFTSO", "address": "0x35D73107A089Ac2b3b14a6681D8c408Aab9568D3" }, { "name": "Aternety", "address": "0x2De2C741658f0Ae7b2DdD8EAdD179911564af119" }, { "name": "1FTSO", "address": "0xeceFe81ff88E5609704697De20Cc36990b76d633" }, { "name": "Flare.Space", "address": "0xCcd522393233052Dd0DfeAadc124a0a9bB87FD08" }, { "name": "FTSO GG", "address": "0x32fE8AC862453DC1B8a390CD3AF821b4FA6fF39D" }, { "name": "Xdrops Oracle", "address": "0x2d3bdE536ad297f2EA74965f02C9E42f4780fB6A" }, { "name": "InGen.FTSO", "address": "0x664e070592063bFE5072F0aC25C6C11e5ccF9928" }, { "name": "PRICEKRAKEN", "address": "0xEF4ef2f3B8C69282846a98341095baa018247553" }, { "name": "Viridissima.es", "address": "0xbADF00D6387958a3E7747C0A0CF5E5a06dcc90c0" }, { "name": "Sparkles FTSO", "address": "0x3012c799565010C3b090D252839a3D24f3b766bE" }, { "name": "FTSO London", "address": "0x0708a4C813594b7E0218CB4A5D8b75c76AbFc859" }, { "name": "Oracle Beast FTSO", "address": "0x3ed7b2cCC4BA420CdcE2BA232d3efdc13075F16D" }, { "name": "Flaris", "address": "0x833DDe54A28a3070A086Cc8919BeAa7a0134DE46" }, { "name": "SignalChamp", "address": "0x263fEca2d46754Aa71BC4Cfc460e8E3055699324" }, { "name": "Tailwind FTSO", "address": "0x04Bd6870d801D68CD58163900B8EED6BDDdA29cB" }, { "name": "Flare Dienst", "address": "0xDe4051b333b3063fd28267Cd4412DD25233D0Ae1" }, { "name": "ACDTftso", "address": "0x86eC5c8Ce7a4DD7762Cff205d64Bfc0C272feB6d" }, { "name": "FTSO Brasil", "address": "0xb9dBa66d8e88c6D620F11Ce32553E0CfBC776926" }, { "name": "EvolveFTSO", "address": "0x0f80AF5b905a9A34f69E74412c4A00B231D26dAa" }, { "name": "Knot Nodes", "address": "0x4619Ae2f09cF5e6da873C501a12D86AaCbD7962B" }, { "name": "Flare Portal", "address": "0x9225db8B30A59D8Dd15448E2E5918BD160262b5D" }, { "name": "FTSO Wales", "address": "0xDD27994108c788613800A8356253Aad99A5DAeD5" }, { "name": "NORTSO", "address": "0x04a8b3171fBbfe4554B55190B43E709c4b672030" }, { "name": "BushiFinance", "address": "0x0d3852Ad415477fFC39ce9351bD4dEdbbd585833" }, { "name": "SSDS", "address": "0x15bC48091332808391ac700A980B12dD4FC266Fb" }, { "name": "Solarius", "address": "0x6c6b3560704Da8A2c33B1BB00E88bA343807E565" }, { "name": "Ugly Kitty", "address": "0x35149714467F2FE71b46eEb4d11689ED8728Bd25" }, { "name": "Wonderftso", "address": "0x78A99Aa32cDe18B33B150941fBF718715d15Af6a" }, { "name": "FTSOCAN", "address": "0x7C255e428e95bEbc76e944D49D4F460C84b3A3c3" }, { "name": "Flare Beacon", "address": "0x633CE03ea66d910c15869e1552fDccC2bf9aAD87" }, { "name": "EDPFTSO", "address": "0x1C602a30335187A97D8061Ffffd4522796DE82bF" }, { "name": "Ivy Oracle", "address": "0xA174D46EF49D7d4a0328f9910222689E9eAb2f45" }, { "name": "SolidiFi FTSO", "address": "0x769530a9F2e4624aE2D6869869d510D4cd55b545" }, { "name": "Envision", "address": "0x58Cd43E9FcdBd4D0F507aB4f6029dB8032746da8" }, { "name": "TheGrungies", "address": "0x2C293599ca61bb53e8fF82c8a19c2A8B883ea23f" }, { "name": "Starlink Oracle", "address": "0xA9a143FEe74E12E97DC794fD1340f851813BDA92" }, { "name": "Aimlezz", "address": "0x0501B6306b03A9EEDe8165d4B9abCB4915937b89" }, { "name": "MyFTSO", "address": "0x399A2dE69e38D93bc397Eb2b1f5487bD25a71C00" }, { "name": "Atlas TSO", "address": "0xB5ECB64526F777Eb6f02D4A83AbAB1FAD26b1C00" }, { "name": "XAWC FTSO", "address": "0x190C6f470A866Db58A6c17631e24b07BE257eAf5" }, { "name": "Odin", "address": "0x8FdBcb218561776759702b175084dBa856282a88" }, { "name": "True FTSO", "address": "0xb6deD9D9CA19af10C67f9A8be8ca75e38E166faA" }, { "name": "Mickey B Fresh", "address": "0xE304AF184b9ca77E3576Aef834A4dc1A43EBfA70" }, { "name": "CFN", "address": "0x889FD8C79FCC81E619b720BD589154C2c9fD74e9" }, { "name": "TempestFTSO", "address": "0x4eb408FA585a5C66E523a4aE5f5706374Ec9E8c7" }, { "name": "sToadz FTSO", "address": "0x6Bf25C0256CBE8969424F6994e19Cf5e0A3C23Bb" }, { "name": "HT Markets FTSO", "address": "0x14d699c1d61d54a0390671B07B2b6f8C0Bf36275" }, { "name": "Flare Ocean", "address": "0xf4213E49488b9320769D35924AC52ea31a4C9fc1" }]
+const ftsoProviders = [
+  { name: 'Bifrost Oracle', address: '0x69141E890F3a79cd2CFf552c0B71508bE23712dC' },
+  { name: 'ScandiNodes FTSO', address: '0x4ed9e5b82CE66311Ac2230D2FCCc5202D7B8c083' },
+  { name: 'Aureus Ox', address: '0x6d323e71E141cE2d7b752313C8A654a9C9d1b377' },
+  { name: 'AlphaOracle', address: '0xBF61Db1CDb43d196309824473fA82E5B17581159' },
+  { name: 'FTSO EU', address: '0x010a16c53F33E4d93892f00897965578b55a8CFC' },
+  { name: 'FTSO UK', address: '0xB9b7355f5b71CEE345311921D247b1D2bA5cFe90' },
+  { name: 'FTSO AU', address: '0x499017ADB21D6f70480E4E6224cf4144071C1461' },
+  { name: 'Use Your Spark', address: '0x53CAEDDA4339eD74272ECfEF85b657dEf18fA2e4' },
+  { name: 'Sun-Dara', address: '0x7394923453FC2F606cfb4D0ea1A5438BB8260D08' },
+  { name: 'Lena Instruments', address: '0xc9AC8F034d295962A6a975b717B691437605Bbb6' },
+  { name: 'A-FTSO', address: '0x2d7bf53ED6117aD1DCD6416d460481522a16aFdf' },
+  { name: 'Defi Oracles', address: '0xCa60cd408A5E447897258cDB1F699478c71Cc55E' },
+  { name: 'uGaenn', address: '0xb53D69B2519aC9F6D65cff8e7824Bf09F7064D61' },
+  { name: 'AFOracle', address: '0x9565d813a3a0CEa62B3bDB9A4e236dCb5910c4f0' },
+  { name: 'FTSOExpress', address: '0x33DDAe234e403789954CD792e1feBdBE2466ADC2' },
+  { name: 'HEWG', address: '0x819eaB111BD9A6E595187A914240529D2EFfF21f' },
+  { name: 'FTSO Plus', address: '0x0FA72D3912d1C530AB1f6a8A9fB61C672947E964' },
+  { name: 'Flare Oracle', address: '0x1B00870092a929D160492daf8E734b4bCA033266' },
+  { name: 'HONO-TSO', address: '0xa467ACeE8127C55Fb1f4d3b863EA5b0C4F599b9b' },
+  { name: 'Scintilla', address: '0xE70d5351a842131c66AAeBC4bD604912BF3cBa72' },
+  { name: 'LightFTSO', address: '0xfB9197720329a80191BA140844E96DCcAD149014' },
+  { name: 'Oracle Daemon', address: '0x92D6c2E99d5959F2e9c0a7aba5149D8A5ef22f23' },
+  { name: 'Dione', address: '0x285430390a72Ce038f6e54BF10f24B94A550474f' },
+  { name: 'FlareFTSO', address: '0x4F7f5F8eF4a3CC11f94e875393Ee909Eb5f824ea' },
+  { name: 'African Proofs', address: '0xaF31CA175bbE0C6dD667c8403B65a33b28238afa' },
+  { name: 'FlareFi', address: '0x5f3C5991De3F0713715a733eE125785D516cEb16' },
+  { name: 'WitterFTSO', address: '0xD9200CC419BDe28B169AD8c904d2687a15A4Bf9F' },
+  { name: '4DadsFTSO', address: '0x35D73107A089Ac2b3b14a6681D8c408Aab9568D3' },
+  { name: 'Aternety', address: '0x2De2C741658f0Ae7b2DdD8EAdD179911564af119' },
+  { name: '1FTSO', address: '0xeceFe81ff88E5609704697De20Cc36990b76d633' },
+  { name: 'Flare.Space', address: '0xCcd522393233052Dd0DfeAadc124a0a9bB87FD08' },
+  { name: 'FTSO GG', address: '0x32fE8AC862453DC1B8a390CD3AF821b4FA6fF39D' },
+  { name: 'Xdrops Oracle', address: '0x2d3bdE536ad297f2EA74965f02C9E42f4780fB6A' },
+  { name: 'InGen.FTSO', address: '0x664e070592063bFE5072F0aC25C6C11e5ccF9928' },
+  { name: 'PRICEKRAKEN', address: '0xEF4ef2f3B8C69282846a98341095baa018247553' },
+  { name: 'Viridissima.es', address: '0xbADF00D6387958a3E7747C0A0CF5E5a06dcc90c0' },
+  { name: 'Sparkles FTSO', address: '0x3012c799565010C3b090D252839a3D24f3b766bE' },
+  { name: 'FTSO London', address: '0x0708a4C813594b7E0218CB4A5D8b75c76AbFc859' },
+  { name: 'Oracle Beast FTSO', address: '0x3ed7b2cCC4BA420CdcE2BA232d3efdc13075F16D' },
+  { name: 'Flaris', address: '0x833DDe54A28a3070A086Cc8919BeAa7a0134DE46' },
+  { name: 'SignalChamp', address: '0x263fEca2d46754Aa71BC4Cfc460e8E3055699324' },
+  { name: 'Tailwind FTSO', address: '0x04Bd6870d801D68CD58163900B8EED6BDDdA29cB' },
+  { name: 'Flare Dienst', address: '0xDe4051b333b3063fd28267Cd4412DD25233D0Ae1' },
+  { name: 'ACDTftso', address: '0x86eC5c8Ce7a4DD7762Cff205d64Bfc0C272feB6d' },
+  { name: 'FTSO Brasil', address: '0xb9dBa66d8e88c6D620F11Ce32553E0CfBC776926' },
+  { name: 'EvolveFTSO', address: '0x0f80AF5b905a9A34f69E74412c4A00B231D26dAa' },
+  { name: 'Knot Nodes', address: '0x4619Ae2f09cF5e6da873C501a12D86AaCbD7962B' },
+  { name: 'Flare Portal', address: '0x9225db8B30A59D8Dd15448E2E5918BD160262b5D' },
+  { name: 'FTSO Wales', address: '0xDD27994108c788613800A8356253Aad99A5DAeD5' },
+  { name: 'NORTSO', address: '0x04a8b3171fBbfe4554B55190B43E709c4b672030' },
+  { name: 'BushiFinance', address: '0x0d3852Ad415477fFC39ce9351bD4dEdbbd585833' },
+  { name: 'SSDS', address: '0x15bC48091332808391ac700A980B12dD4FC266Fb' },
+  { name: 'Solarius', address: '0x6c6b3560704Da8A2c33B1BB00E88bA343807E565' },
+  { name: 'Ugly Kitty', address: '0x35149714467F2FE71b46eEb4d11689ED8728Bd25' },
+  { name: 'Wonderftso', address: '0x78A99Aa32cDe18B33B150941fBF718715d15Af6a' },
+  { name: 'FTSOCAN', address: '0x7C255e428e95bEbc76e944D49D4F460C84b3A3c3' },
+  { name: 'Flare Beacon', address: '0x633CE03ea66d910c15869e1552fDccC2bf9aAD87' },
+  { name: 'EDPFTSO', address: '0x1C602a30335187A97D8061Ffffd4522796DE82bF' },
+  { name: 'Ivy Oracle', address: '0xA174D46EF49D7d4a0328f9910222689E9eAb2f45' },
+  { name: 'SolidiFi FTSO', address: '0x769530a9F2e4624aE2D6869869d510D4cd55b545' },
+  { name: 'Envision', address: '0x58Cd43E9FcdBd4D0F507aB4f6029dB8032746da8' },
+  { name: 'TheGrungies', address: '0x2C293599ca61bb53e8fF82c8a19c2A8B883ea23f' },
+  { name: 'Starlink Oracle', address: '0xA9a143FEe74E12E97DC794fD1340f851813BDA92' },
+  { name: 'Aimlezz', address: '0x0501B6306b03A9EEDe8165d4B9abCB4915937b89' },
+  { name: 'MyFTSO', address: '0x399A2dE69e38D93bc397Eb2b1f5487bD25a71C00' },
+  { name: 'Atlas TSO', address: '0xB5ECB64526F777Eb6f02D4A83AbAB1FAD26b1C00' },
+  { name: 'XAWC FTSO', address: '0x190C6f470A866Db58A6c17631e24b07BE257eAf5' },
+  { name: 'Odin', address: '0x8FdBcb218561776759702b175084dBa856282a88' },
+  { name: 'True FTSO', address: '0xb6deD9D9CA19af10C67f9A8be8ca75e38E166faA' },
+  { name: 'Mickey B Fresh', address: '0xE304AF184b9ca77E3576Aef834A4dc1A43EBfA70' },
+  { name: 'CFN', address: '0x889FD8C79FCC81E619b720BD589154C2c9fD74e9' },
+  { name: 'TempestFTSO', address: '0x4eb408FA585a5C66E523a4aE5f5706374Ec9E8c7' },
+  { name: 'sToadz FTSO', address: '0x6Bf25C0256CBE8969424F6994e19Cf5e0A3C23Bb' },
+  { name: 'HT Markets FTSO', address: '0x14d699c1d61d54a0390671B07B2b6f8C0Bf36275' },
+  { name: 'Flare Ocean', address: '0xf4213E49488b9320769D35924AC52ea31a4C9fc1' },
+]
 
 const CreateToken = () => {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const { address: account } = useAccount()
   const [isLoading, setIsLoading] = useState(false)
-  const [delegationAddress, setDelegationAddress] = useState("")
+  const [delegationAddress, setDelegationAddress] = useState('')
   const [formData, setFormData] = useState({
     delegationAmount: 0,
   })
-  const wbnbAddress = "0x02f0826ef6aD107Cfc861152B32B52fD11BaB9ED";
-  const { balance: bnbBalance, } = useGetBnbBalance()
+  const wbnbAddress = '0x02f0826ef6aD107Cfc861152B32B52fD11BaB9ED'
+  const { balance: bnbBalance } = useGetBnbBalance()
   const formattedBnbBalance = parseFloat(formatEther(bnbBalance))
-  const { balance: wbnbBalance, } = useTokenBalance(wbnbAddress)
+  const { balance: wbnbBalance } = useTokenBalance(wbnbAddress)
+  const [delegationPercent, setDelegationPercent] = useState(0)
   const formattedWbnbBalance = getBalanceNumber(wbnbBalance)
-  const wsgbContract = useContract(wbnbAddress, WSGBABI, true);
-  const ftsoAddress = "0x13F7866568dC476cC3522d17C23C35FEDc1431C5"
-  const ftsoContract = useContract(ftsoAddress, ftsoABI, true);
-  const [pendingReward, setPendingReward] = useState("")
-  const [delegations,setDelegations] = useState([])
-  const [epochs,setEpochs] = useState([])
+  const wsgbContract = useContract(wbnbAddress, WSGBABI, true)
+  const ftsoAddress = '0x13F7866568dC476cC3522d17C23C35FEDc1431C5'
+  const ftsoContract = useContract(ftsoAddress, ftsoABI, true)
+  const [pendingReward, setPendingReward] = useState('')
+  const [delegations, setDelegations] = useState([])
+  const [epochs, setEpochs] = useState([])
   const [formError, setFormError] = useState({
-    wgbDelegationError: "",
+    wgbDelegationError: '',
   })
-
 
   useEffect(() => {
     if (ftsoContract && account) {
@@ -149,37 +264,36 @@ const CreateToken = () => {
     }
   }, [ftsoContract, account])
 
-
   const loadMyData = async () => {
     try {
       const delegationInfo = await wsgbContract.delegatesOf(account)
       const _delegations = []
-      for (let i = 0; i < delegationInfo._delegateAddresses.length; i++){
+      for (let i = 0; i < delegationInfo._delegateAddresses.length; i++) {
         const provider = ftsoProviders.find((item) => {
           return item.address.toLowerCase() === delegationInfo._delegateAddresses[i].toLowerCase()
         })
         _delegations.push({
           address: delegationInfo._delegateAddresses[i],
           pips: BigNumber.from(delegationInfo._bips[i]).toNumber() / 100,
-          providerName:provider.name
+          providerName: provider.name,
         })
       }
       setDelegations(_delegations)
       console.log({ delegationInfo })
-      const epochsResp = await ftsoContract.getEpochsWithUnclaimedRewards(account);
-      let totalPendingRewards = BigNumber.from("0");
-      const rewardStats = [];
-      const _epochs  = []
+      const epochsResp = await ftsoContract.getEpochsWithUnclaimedRewards(account)
+      let totalPendingRewards = BigNumber.from('0')
+      const rewardStats = []
+      const _epochs = []
       for (const epoch of epochsResp) {
         _epochs.push(BigNumber.from(epoch).toString())
         // eslint-disable-next-line no-await-in-loop
         const rewardState = await ftsoContract.getStateOfRewards(account, BigNumber.from(epoch).toString())
-        for (let i = 0; i < rewardState._dataProviders.length; i++){
+        for (let i = 0; i < rewardState._dataProviders.length; i++) {
           rewardStats.push({
             provider: rewardState._dataProviders[i],
             epoch: BigNumber.from(epoch).toString(),
             claimed: rewardState._claimed[i],
-            rewardAmount: BigNumber.from(rewardState._rewardAmounts[i])
+            rewardAmount: BigNumber.from(rewardState._rewardAmounts[i]),
           })
         }
       }
@@ -192,43 +306,46 @@ const CreateToken = () => {
       }
 
       setPendingReward(Number(formatEther(totalPendingRewards)).toFixed(4))
-     
-    
     } catch (err) {
       console.error(err)
     }
   }
 
-
   const validate = () => {
-    let isError = false;
+    let isError = false
     let errors = {
-      wgbDelegationError: ""
+      wgbDelegationError: '',
     }
     if (!formData.delegationAmount) {
       errors = {
         ...errors,
-        wgbDelegationError: "Enter Valid Delegation Amount"
+        wgbDelegationError: 'Enter Valid Delegation Amount',
       }
       isError = true
     } else if (!delegationAddress) {
       errors = {
         ...errors,
-        wgbDelegationError: "Please Select Provider"
+        wgbDelegationError: 'Please Select Provider',
+      }
+      isError = true
+    } else if (formData.delegationAmount > formattedWbnbBalance) {
+      errors = {
+        ...errors,
+        wgbDelegationError: 'Not Enough WSGB Balance',
       }
       isError = true
     } else if (delegations.length === 2) {
       errors = {
         ...errors,
-        wgbDelegationError: "Max Delegation Exceeded"
+        wgbDelegationError: 'Max Delegation Exceeded',
       }
       isError = true
     } else {
-      const pipsRaw = formData.delegationAmount * 10000 / formattedWbnbBalance
+      const pipsRaw = (formData.delegationAmount * 10000) / formattedWbnbBalance
       if (pipsRaw > 10000) {
         errors = {
           ...errors,
-          wgbDelegationError: "Not Enough WSGB Balance"
+          wgbDelegationError: 'Not Enough WSGB Balance',
         }
         isError = true
       }
@@ -239,48 +356,39 @@ const CreateToken = () => {
     return !isError
   }
 
-
   const handleClaim = async () => {
     setIsLoading(true)
     try {
-      const txn = await ftsoContract.claimReward(account, [...epochs]);
-      await txn.wait("1")
+      const txn = await ftsoContract.claimReward(account, [...epochs])
+      await txn.wait('1')
       await loadMyData()
     } catch (err) {
       console.error(err)
-
     }
     setIsLoading(false)
-
   }
-
 
   const unDelegate = async () => {
     setIsLoading(true)
     try {
-      const resp = await wsgbContract.undelegateAll();
-      await resp.wait("1")
+      const resp = await wsgbContract.undelegateAll()
+      await resp.wait('1')
       await loadMyData()
-
     } catch (err) {
       console.error(err)
-
     }
     setIsLoading(false)
-
   }
-
 
   const handleSubmit = async () => {
     const isValid = validate()
     setIsLoading(true)
     if (isValid) {
-
       try {
-        const pipsRaw = formData.delegationAmount * 10000 / formattedWbnbBalance
-        const pips = parseInt(pipsRaw.toString());
-        const resp = await wsgbContract.delegate(delegationAddress, pips);
-        await resp.wait("1")
+        const pipsRaw = (formData.delegationAmount * 10000) / formattedWbnbBalance
+        const pips = parseInt(pipsRaw.toString())
+        const resp = await wsgbContract.delegate(delegationAddress, pips)
+        await resp.wait('1')
 
         await loadMyData()
       } catch (err) {
@@ -296,9 +404,9 @@ const CreateToken = () => {
 
     for (const provider of ftsoProviders) {
       options.push({
-        value: provider.address, label: provider.name
-      }
-      )
+        value: provider.address,
+        label: provider.name,
+      })
     }
     return options
   }
@@ -314,21 +422,21 @@ const CreateToken = () => {
               <Text color="textSubtle" mb="8px" mr="8px">
                 Once you are done with the delegation, you can provide liquidity to earn even more.
               </Text>
-              <Link href="https://app.canaryx.finance/liquidity?chain=songbird" >
-              <Button 
-                id="to-liquidity-link" 
-                variant="secondary" 
-                scale="sm"
-                style={{
-                  minWidth: "120px", // Minimum button width
-                  width: "100%", // Button takes up all available space
-                  whiteSpace: "nowrap", // Prevents the text from breaking into a new line
-                  overflow: "hidden", // Hide the overflowed text
-                  textOverflow: "ellipsis", // Add '...' at the end of the text if it's too long
-                }}
-              >
-                Go To Liquidity
-              </Button>
+              <Link href="https://app.canaryx.finance/liquidity?chain=songbird">
+                <Button
+                  id="to-liquidity-link"
+                  variant="secondary"
+                  scale="sm"
+                  style={{
+                    minWidth: '120px', // Minimum button width
+                    width: '100%', // Button takes up all available space
+                    whiteSpace: 'nowrap', // Prevents the text from breaking into a new line
+                    overflow: 'hidden', // Hide the overflowed text
+                    textOverflow: 'ellipsis', // Add '...' at the end of the text if it's too long
+                  }}
+                >
+                  Go To Liquidity
+                </Button>
               </Link>
             </Flex>
           </Left>
@@ -336,25 +444,30 @@ const CreateToken = () => {
       </StyledHeader>
       <>
         <PageSection
-          innerProps={{ style: { margin: '0', width: '100%', } }}
+          innerProps={{ style: { margin: '0', width: '100%' } }}
           background={theme.colors.background}
           // p="24px 0"
           index={2}
           concaveDivider
           dividerPosition="top"
         >
-          <AppBody >
-            <Box width="100%"
-              style={{
-                // background: "red",
-                width: "100%",
-                display: "flex"
-              }}
-              className='testtest'
+          <AppBody>
+            <Box
+               width="100%"
+               style={{
+                 background: 'none',
+                 boxShadow: `inset 4px 6px 7px ${theme.isDark ? '#1c1d1e' : '#e9ecef'}, 
+                             inset -2px -4px 7px ${theme.isDark ? '#6f6f71' : '#ffffff'}`,
+                 width: '100%',
+                 display: 'flex',
+               }}
+               className="testtest"
             >
-              <Card style={{
-                width: "100%"
-              }}>
+              <Card
+                style={{
+                  width: '100%',
+                }}
+              >
                 <CardHeader>
                   <Heading as="h3" scale="md">
                     Delegate on the Flare Network
@@ -362,77 +475,62 @@ const CreateToken = () => {
                 </CardHeader>
 
                 <StyledCardBody>
-
-
-                  <div style={{ display: isMobile ? "block" : "flex", justifyContent: "space-between" }}>
-                    <div style={{ width: isMobile ? "100%" : "80%" }}>
+                  <div style={{ display: isMobile ? 'block' : 'flex', justifyContent: 'space-between' }}>
+                    <div style={{ width: isMobile ? '100%' : '80%' }}>
                       <Box mb="24px">
-                        <SecondaryLabel>Your SGB Balance:</SecondaryLabel>
-                        <Input
-                          disabled
-
-                          value={formattedBnbBalance}
-                          placeholder="0"
-                        />
-
+                        <LabelInputContainer>
+                          <StyledSecondaryLabel>Your SGB Balance:</StyledSecondaryLabel>
+                          <StyledInput disabled value={formattedBnbBalance} placeholder="0" />
+                        </LabelInputContainer>
                       </Box>
 
                       <Box mb="24px">
-                        <SecondaryLabel>Ready-to-Delegate WSGB:</SecondaryLabel>
-                        <Input
-                          disabled
-                          value={formattedWbnbBalance}
-                          placeholder="0"
-                        />
-                        <Link
-                          external
-                          m="0 4px"
-                          fontSize="12px"
-                          color="warning"
-                          href="/swap?chain=songbird&outputCurrency=0x02f0826ef6aD107Cfc861152B32B52fD11BaB9ED"
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          Wrap SGB To WSGB
-                        </Link>
+                        <LabelInputContainer>
+                          <StyledSecondaryLabel>Ready-to-Delegate WSGB:</StyledSecondaryLabel>
+                          <StyledInput disabled value={formattedWbnbBalance} placeholder="0" />{' '}
+                        </LabelInputContainer>
                       </Box>
 
-
                       <Box mb="24px">
-                        <SecondaryLabel>Choose Your Data Provider:</SecondaryLabel>
-                        <StyledDropdown options={getDropdownOptions()} onChange={(item: Option) => {
-                          if (item && item.value) {
-                            setDelegationAddress(item?.value)
-                          }
-                        }} placeholder="-- Browse Options --" />
-
+                        <LabelInputContainer>
+                          <StyledSecondaryLabel>Choose Your Data Provider:</StyledSecondaryLabel>
+                          <StyledDropdown
+                            options={getDropdownOptions()}
+                            onChange={(item: Option) => {
+                              if (item && item.value) {
+                                setDelegationAddress(item?.value)
+                              }
+                            }}
+                            placeholder="-- Browse Options --"
+                          />
+                        </LabelInputContainer>
                       </Box>
                       <Box mb="24px">
-                        <SecondaryLabel>Enter WSGB Delegation Amount</SecondaryLabel>
-                        <Input
-                          type='number'
-
-                          onChange={(e) => setFormData({ ...formData, delegationAmount: Number(e.target.value) })}
-                          value={formData.delegationAmount.toString()}
-                          // onChange={handleDateChange('startTime')}
-                          placeholder="i.e 100000"
-                        />
+                        <LabelInputContainer>
+                          <StyledSecondaryLabel>Enter WSGB Delegation Amount</StyledSecondaryLabel>
+                          <StyledInput
+                            type="number"
+                            onChange={(e) => setFormData({ ...formData, delegationAmount: Number(e.target.value) })}
+                            value={formData.delegationAmount.toString()}
+                            // onChange={handleDateChange('startTime')}
+                            placeholder="i.e 100000"
+                          />
+                        </LabelInputContainer>
 
                         <PercentSlider
-
                           onValueChanged={(e) => {
-                            const _inputAmount = formattedWbnbBalance * Number(e) / 100;
+                            const _inputAmount = (formattedWbnbBalance * Number(e)) / 100
                             setFormData({ ...formData, delegationAmount: Number(_inputAmount) })
                           }}
-                          currentValue={formData.delegationAmount * 100 / formattedWbnbBalance}
+                          currentValue={(formData.delegationAmount * 100) / formattedWbnbBalance}
                         />
                         <FormError>{formError.wgbDelegationError}</FormError>
-
                       </Box>
-
 
                       {account && (
                         <>
-                          <Button  scale="sm"
+                          <Button
+                            scale="sm"
                             type="submit"
                             width="100%"
                             isLoading={isLoading}
@@ -444,63 +542,66 @@ const CreateToken = () => {
                           >
                             Commence Delegation
                           </Button>
-
-
-
-
                         </>
                       )}
-
                     </div>
 
-                    <div style={{ width: "100%", marginLeft: isMobile ? 0 : 10 }}>
-                      {/* <Box mb="24px">
-                        <SecondaryLabel>Delegated WSGB Balance:</SecondaryLabel>
-                        <Input
-                          disabled
+                    <div style={{ width: '100%', marginLeft: isMobile ? 0 : 30 }}>
+                      <Box mb="24px">
+                        <LabelInputContainer>
+                          <StyledSecondaryLabel>Account address:</StyledSecondaryLabel>
+                          <StyledInput disabled value={account || 'Not connected'} placeholder="Not connected" />
+                        </LabelInputContainer>
+                      </Box>
 
-                          value={formattedBnbBalance}
-                          placeholder="0"
-                        />
-
-                      </Box> */}
-
-
-
-                      {account &&              <Card>
-                        <CardBody>
-                        <Table>
-                        <thead>
-                          <Th >
-                            <Text fontSize="12px" bold textTransform="uppercase" color="textSubtle" textAlign="left" >
-                              Your Delegation Partners
-                            </Text>
-                          </Th>
-                          <Th >
-                            <Text fontSize="12px" bold textTransform="uppercase" color="textSubtle" textAlign="left">
-                              Percent
-                            </Text>
-                          </Th>
-                          <Th />
-                        </thead>
-                            <tbody>
-                              {delegations.map((item, index) => {
-                                // eslint-disable-next-line react/no-array-index-key
-                                return <tr key={index}>
-                                   <Td>
-                                    <Text fontSize="14px">
-                                      {item.providerName}
-                                      {/* {item.address} */}
-                              </Text>
-                                  </Td>
-                                <Td>
-                                <Text fontSize="14px">
-                                      {item.pips}%
-                              </Text>
-                            </Td>
-                                </tr>
-                              })}
-                          {/* {feeList.map((fee) => (
+                      {account && (
+                        <StyledCard>
+                          <StyledCardBody>
+                            <Table>
+                              <thead>
+                                <Th>
+                                  <Text
+                                    fontSize="12px"
+                                    bold
+                                    textTransform="uppercase"
+                                   
+                                    textAlign="left"
+                                  >
+                                    Your Delegation Partners
+                                  </Text>
+                                </Th>
+                                <Th>
+                                  <Text
+                                    fontSize="12px"
+                                    bold
+                                    textTransform="uppercase"
+                                    
+                                    textAlign="left"
+                                  >
+                                    Percent
+                                  </Text>
+                                </Th>
+                                <Th />
+                              </thead>
+                              <tbody>
+                                {delegations.map((item, index) => {
+                                 
+                                  return (
+                                     // eslint-disable-next-line react/no-array-index-key
+                                    <tr key={index}>
+                                      <Td>
+                                        <Text fontSize="14px">
+                                          {item.providerName}
+                                          {/* {item.address}  */}
+                                        </Text>
+                                      </Td>
+                                      <Td>
+                                        <Text fontSize="14px">{item.pips}%</Text>
+                                      </Td>
+                                    </tr>
+                                  )
+                                })}
+                                {/* {feeList.map((fee) => (
                           <tr key={fee.id}>
                             <Td>
                               <Text fontSize="14px">
@@ -525,60 +626,53 @@ const CreateToken = () => {
                             </Td>
                           </tr>
                         ))} */}
-                        </tbody>
-                      </Table>
+                              </tbody>
+                            </Table>
 
-                        
-                        <CardFooter>
-                        <Button  variant="secondary" scale="sm"
-                          type="submit"
-                          width="100%"
-                          isLoading={isLoading}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            unDelegate()
-                          }}
-                          mb="16px"
-                        >
-                          Retract All Delegations
-                        </Button>
+                            <CardFooter>
+                              <Button
+                                variant="secondary"
+                                scale="sm"
+                                type="submit"
+                                width="100%"
+                                isLoading={isLoading}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  unDelegate()
+                                }}
+                                mb="16px"
+                              >
+                                Retract All Delegations
+                              </Button>
 
-
-
-
-                        <Button  variant="secondary" scale="sm"
-                          type="submit"
-                          width="100%"
-                          disabled={Number.isNaN(Number(pendingReward))}
-                          isLoading={isLoading}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            handleClaim()
-                          }}
-                          mb="16px"
-                        >
-                          Claim your delegation rewards {pendingReward &&  pendingReward  } SGB
-                        </Button>
-                        </CardFooter></CardBody>
-                      </Card>
-               
-}
-
-
+                              <Button
+                                variant="secondary"
+                                scale="sm"
+                                type="submit"
+                                width="100%"
+                                disabled={Number.isNaN(Number(pendingReward))}
+                                isLoading={isLoading}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  handleClaim()
+                                }}
+                                mb="16px"
+                              >
+                                Claim Rewards {pendingReward && pendingReward} SGB
+                              </Button>
+                            </CardFooter>
+                          </StyledCardBody>
+                        </StyledCard>
+                      )}
                     </div>
-
-
                   </div>
 
                   {!account && <ConnectWalletButton width="100%" type="button" />}
                 </StyledCardBody>
               </Card>
-
             </Box>
-
           </AppBody>
         </PageSection>
-
       </>
     </>
   )

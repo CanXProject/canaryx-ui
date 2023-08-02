@@ -11,6 +11,7 @@ import {
   NftFillIcon,
   MoreIcon,
   DropdownMenuItems,
+  VerifiedIcon,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
@@ -92,22 +93,23 @@ const config: (
           href: '/liquidity',
         },
         {
+          label: t('Farms'),
+          href: '/farms',
+        },
+        {
           label: t('Pools'),
           href: '/pools',
           supportChainIds: SUPPORT_ONLY_BSC,
         },
-        {
-          label: t('Farms'),
-          href: '/farms',
-        },
+        
       ].map((item) => addMenuItemSupported(item, chainId)),
     },
 
     {
       label: t('Create'),
       href: 'https://canaryx.finance/create',
-      icon: EarnIcon,
-      fillIcon: EarnFillIcon,
+      icon: VerifiedIcon,
+      // fillIcon: HotFillIcon,
       image: '/images/decorations/pe2.png',
       items: [],
     },

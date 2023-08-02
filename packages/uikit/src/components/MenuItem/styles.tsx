@@ -12,7 +12,7 @@ export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
         content: "";
         position: absolute;
         bottom: 0;
-        height: 4px;
+        height: 0px;
         width: 100%;
         background-color: ${theme.colors.primary};
         border-radius: 2px 2px 0 0;
@@ -23,7 +23,15 @@ export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
 const StyledMenuItem = styled.a<StyledMenuItemProps>`
   position: relative;
   display: flex;
+  justify-content: center;
+  border-radius: 8px;
   align-items: center;
+  padding: 0;
+  width: 80px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: ${({ theme }) => theme.colors.buttonBackground};
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin: 10px;
 
   color: ${({ theme, $isActive }) => ($isActive ? theme.colors.secondary : theme.colors.textSubtle)};
   font-size: 16px;
@@ -36,28 +44,32 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
     `
     &:after {
       content: "";
-      border-radius: 100%;
+      border-radius: 8px;
       background: ${theme.colors[$statusColor]};
       height: 8px;
       width: 8px;
-      margin-left: 12px;
+      margin-left:12px;
     }
   `}
 
   ${({ $variant }) =>
     $variant === "default"
       ? `
-    padding: 0 16px;
-    height: 48px;
+    padding: 0 12px;
+    height: 40px;
   `
       : `
     padding: 4px 4px 0px 4px;
-    height: 42px;
+    height: 35px;
   `}
 
+  &:active {
+    transform: scale(0.95);
+  }
+
   &:hover {
-    background: ${({ theme }) => theme.colors.tertiary};
-    ${({ $variant }) => $variant === "default" && "border-radius: 10px;"};
+    transform: translateY(-2px);
+    box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 `;
 

@@ -53,7 +53,8 @@ describe('transformPool', () => {
   // Transform pool object with the sous id for a label. For display purposes only.
   const poolTable: [number, Pool.SerializedPoolConfig<SerializedWrappedToken>][] = poolsConfig.map(
     (poolsConfigItem) => [poolsConfigItem.sousId, poolsConfigItem],
-  )
+  ) as [number, Pool.SerializedPoolConfig<SerializedWrappedToken>][];
+  
   it.each(poolTable)('transforms pool %d correctly', (sousId, config) => {
     const pool = {
       ...config,

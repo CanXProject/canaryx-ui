@@ -29,7 +29,7 @@ export const CopyButton: React.FC<React.PropsWithChildren<CopyButtonProps>> = ({
     setIsTooltipDisplayed(true);
     setTimeout(() => {
       setIsTooltipDisplayed(false);
-    }, 1000);
+    }, 10000);
   };
   return (
     <>

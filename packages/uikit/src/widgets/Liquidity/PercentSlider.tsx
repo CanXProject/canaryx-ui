@@ -22,24 +22,26 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
   );
 
   // Check if currentValue is a number, if not set to 0
-  const validCurrentValue = Number.isNaN(currentValue) ? 0 : currentValue;
+  const validCurrentValue = Number.isNaN(Number(currentValue)) ? 0 : currentValue;
   const [innerLiquidityPercentage, setInnerLiquidityPercentage] = useDebouncedChangeHandler(
     validCurrentValue,
     liquidityPercentChangeCallback
   );
 
   const handleChangePercent = useCallback(
-    (value: any) => {
+    (value: string | number) => {
       // Check if value is a number, if not set to 0
-      const validValue = Number.isNaN(value) ? 0 : Math.ceil(value);
+      const validValue = Number.isNaN(Number(value)) ? 0 : Math.ceil(Number(value));
       setInnerLiquidityPercentage(validValue);
     },
     [setInnerLiquidityPercentage]
   );
 
   // Check if innerLiquidityPercentage is a number, if not set to 0
-  const validInnerLiquidityPercentage = Number.isNaN(innerLiquidityPercentage) ? 0 : innerLiquidityPercentage;
-
+  const validInnerLiquidityPercentage = Number.isNaN(Number(innerLiquidityPercentage)) ? 0 : innerLiquidityPercentage;
+  
+  const percentages = ["25", "50", "75", "100"];
+  
   return (
     <>
       <Slider
@@ -52,18 +54,11 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
         mb="16px"
       />
       <AtomBox display="flex" flexWrap="wrap" justifyContent="space-between">
-        <Button variant="tertiary" scale="sm" onClick={() => onValueChanged("25")}>
-          25%
-        </Button>
-        <Button variant="tertiary" scale="sm" onClick={() => onValueChanged("50")}>
-          50%
-        </Button>
-        <Button variant="tertiary" scale="sm" onClick={() => onValueChanged("75")}>
-          75%
-        </Button>
-        <Button variant="tertiary" scale="sm" onClick={() => onValueChanged("100")}>
-          {t("Max")}
-        </Button>
+        {percentages.map((percentage) => (
+          <Button key={percentage} variant="tertiary" scale="sm" onClick={() => onValueChanged(percentage)} aria-label={`Set to ${percentage}%`}>
+            {percentage === "100" ? t("Max") : `${percentage}%`}
+          </Button>
+        ))}
       </AtomBox>
     </>
   );

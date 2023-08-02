@@ -97,7 +97,7 @@ export const Tooltip = styled.div`
   background: ${({ theme }) => theme.tooltip.background};
   box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
   white-space: nowrap;
-  opacity: 0;
+  opacity: 1;
   z-index: 100;
   animation: ${tooltipAnimation} 3s forwards ease-in-out;
   ${Text},svg {

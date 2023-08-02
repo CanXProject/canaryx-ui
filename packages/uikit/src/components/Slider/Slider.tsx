@@ -4,7 +4,6 @@ import {
   BunnySlider,
   BarBackground,
   BarProgress,
-  BunnyButt,
   StyledInput,
   SliderLabel,
   SliderLabelContainer,
@@ -41,15 +40,15 @@ const Slider: React.FC<React.PropsWithChildren<SliderProps>> = ({
   } else {
     progressWidth = `${progressPercentage}%`;
   }
-  {/* const labelProgress = isMax ? "calc(100% - 12px)" : `${progressPercentage}%`;*/}
+ 
   const labelProgress = `${progressPercentage}%`;
   const displayValueLabel = isMax ? "MAX" : valueLabel;
   return (
     <Box position="relative" height="48px" {...props}>
-      {/* <BunnyButt disabled={disabled} /> */}
+     
       <BunnySlider>
-        <BarBackground disabled={disabled} />
-        <BarProgress style={{ width: progressWidth }} disabled={disabled} />
+        <BarBackground />
+        <BarProgress style={{ width: progressWidth }}  />
         <StyledInput
           name={name}
           type="range"
@@ -64,7 +63,7 @@ const Slider: React.FC<React.PropsWithChildren<SliderProps>> = ({
       </BunnySlider>
       {valueLabel && (
         <SliderLabelContainer>
-          <SliderLabel progress={labelProgress}>{displayValueLabel}</SliderLabel>
+          <SliderLabel progress={labelProgress}><span>{displayValueLabel}</span></SliderLabel>
         </SliderLabelContainer>
       )}
     </Box>
