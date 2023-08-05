@@ -104,6 +104,10 @@ export const useERC20 = (address: string, withSignerIfPossible = true) => {
   return useMemo(() => getBep20Contract(address, providerOrSigner), [address, providerOrSigner])
 }
 
+export const useTokenGenContract = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getTokenGenContract(library.getSigner()), [library])
+}
 /**
  * @see https://docs.openzeppelin.com/contracts/3.x/api/token/erc721
  */
@@ -408,3 +412,7 @@ export const useStableSwapNativeHelperContract = () => {
   const { data: signer } = useSigner()
   return useMemo(() => getStableSwapNativeHelperContract(signer, chainId), [signer, chainId])
 }
+function useActiveWeb3React(): { library: any } {
+  throw new Error('Function not implemented.')
+}
+

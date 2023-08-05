@@ -37,7 +37,7 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
     arrowPadding = 16,
     tooltipPadding = { left: 16, right: 16 },
     tooltipOffset = [0, 10],
-    hideTimeout = 100,
+    hideTimeout = 800,
     manualVisible = false,
     avoidToStopPropagation = false,
   } = options || {};
@@ -136,13 +136,13 @@ const useTooltip = (content: React.ReactNode, options?: TooltipOptions): Tooltip
 
   // Keep tooltip open when cursor moves from the targetElement to the tooltip
   useEffect(() => {
-    if (tooltipElement === null || trigger !== "hover" || manualVisible) return undefined;
+    if (targetElement === null || trigger !== "hover" || manualVisible) return undefined;
 
-    tooltipElement.addEventListener("mouseenter", showTooltip);
-    tooltipElement.addEventListener("mouseleave", hideTooltip);
+    targetElement.addEventListener("mouseenter", showTooltip);
+    targetElement.addEventListener("mouseleave", hideTooltip);
     return () => {
-      tooltipElement.removeEventListener("mouseenter", showTooltip);
-      tooltipElement.removeEventListener("mouseleave", hideTooltip);
+      targetElement.removeEventListener("mouseenter", showTooltip);
+      targetElement.removeEventListener("mouseleave", hideTooltip);
     };
   }, [trigger, tooltipElement, hideTooltip, showTooltip, manualVisible]);
 

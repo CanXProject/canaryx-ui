@@ -62,14 +62,14 @@ export const SliderLabel = styled(Text)<SliderLabelProps>`
     position: absolute;
     align: center;
     right: 0px;
-    top: -29px;
+    top: -26px;
     color: #ffffffff;
     background: ${({ theme }) => `url(${theme.isDark ? barDisplayD : barDisplay})`} no-repeat center center;
     text-align: center;
     font-weight: bold;
     width: 100%;
-    height: 95%;
-    border-radius: 0px;  
+    height: 87%;
+    border-radius: 1px;  
   }
 `;
 

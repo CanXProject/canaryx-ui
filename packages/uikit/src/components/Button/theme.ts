@@ -45,8 +45,9 @@ export const styleVariants = {
   },
   [variants.TERTIARY]: {
     backgroundColor: "tertiary",
-    boxShadow: "none",
     color: "primary",
+    borderRadius: "5px",
+    boxShadow: `inset 3px 4px 7px ${vars.colors.buttonAlt3}, inset -2px -2px 4px 3px ${vars.colors.buttonAlt1}`,
   },
   [variants.SUBTLE]: {
     backgroundColor: "textSubtle",

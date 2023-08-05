@@ -38,7 +38,7 @@ transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 
 export const LightGreyCard = styled(Card)`
 color: ${({ theme }) => theme.colors.primary};
-background-color: ${({ theme }) => theme.colors.backgroundAlt2};
+background-color: ${({ theme }) => theme.colors.backgroundAlt};
 margin-bottom: 0.5em;
 padding: 10px;
 text-align: center;

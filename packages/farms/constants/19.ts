@@ -25,6 +25,13 @@ const farms: SerializedFarmConfig[] = [
         token: songbirdTokens.wbnb,
         quoteToken: songbirdTokens.busd,
       },
+      {
+        pid: 3,
+        lpSymbol: 'CNYX-SGB LP',
+        lpAddress:"0x8E3e6eeDe5b94aEDD347384eE9Ee8e940AF23886",
+        token: songbirdTokens.cnyx,
+        quoteToken: songbirdTokens.wbnb,
+      },
   // {
   //   pid: 34,
   //   vaultPid: 3,

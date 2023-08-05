@@ -2,7 +2,7 @@ import { useTranslation } from "@pancakeswap/localization";
 import { ReactElement } from "react";
 import styled, { keyframes } from 'styled-components';
 import { Flex } from "../../components/Box";
-import { CardBody, CardRibbon } from "../../components/Card";
+import { CardBody, CardRibbon, LightGreyCard } from "../../components/Card";
 import { Skeleton } from "../../components/Skeleton";
 import { PoolCardHeader, PoolCardHeaderTitle } from "./PoolCardHeader";
 import { StyledCard } from "./StyledCard";
@@ -87,8 +87,10 @@ export function PoolCard<T>({ pool, cardContent, aprRow, isStaked, cardFooter, t
         )}
       </PoolCardHeader>
       <CardBody>
-        {aprRow}
-        <Flex mt="24px" flexDirection="column">
+        <LightGreyCard>
+          {aprRow}
+        </LightGreyCard>
+        <Flex mt="3px" flexDirection="column">
           {cardContent}
         </Flex>
       </CardBody>

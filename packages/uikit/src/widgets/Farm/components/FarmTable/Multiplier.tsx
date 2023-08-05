@@ -62,14 +62,7 @@ const Multiplier: React.FunctionComponent<React.PropsWithChildren<FarmTableMulti
               We have recently rebased multipliers by a factor of 10, this is only a visual change and does not affect the amount of CANARY each farm receives.
        
           </Text>
-          <Link
-            mt="8px"
-            display="inline"
-            // href="https://medium.com/pancakeswap/farm-mutlipliers-visual-update-1f5f5f615afd"
-            external
-          >
-            {t("Read more")}
-          </Link>
+         
         </>
       )}
     </>
