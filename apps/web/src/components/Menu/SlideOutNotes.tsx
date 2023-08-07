@@ -31,9 +31,7 @@ const H1 = styled.h2`
 
   &:hover {
     color: ${({ theme }) => theme.colors.secondary};
-    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
-                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
-    transform: scale(1.01);
+   
   }
 `;
 
@@ -69,8 +67,7 @@ const H3 = styled.h4`
 
   &:hover {
     color: ${({ theme }) => theme.colors.textSlide};
-    box-shadow: 1px 1px 2px ${({ theme }) => theme.colors.slideShadow}, 
-                -1px -1px 2px ${({ theme }) => theme.colors.slideBackground1};
+   
     transform: scale(1.01);
   }
 `;

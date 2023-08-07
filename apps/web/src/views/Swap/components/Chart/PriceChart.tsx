@@ -28,6 +28,15 @@ const PriceChart = ({
     setLoaded(true);
   }, []);
 
+  const [isReversed, setIsReversed] = useState(false);
+
+  const handleSwitchTokens = () => {
+    onSwitchTokens();
+    setIsReversed((prev) => !prev);
+};
+
+
+
   return (
     <StyledPriceChart 
       className={loaded ? 'loaded' : ''}
@@ -49,7 +58,7 @@ const PriceChart = ({
               {outputCurrency ? `${inputCurrency.symbol}/${outputCurrency.symbol}` : inputCurrency.symbol}
             </Text>
           )}
-          <IconButton variant="text" onClick={onSwitchTokens}>
+          <IconButton variant="text" onClick={handleSwitchTokens}  style={{ marginLeft: '10px' }}  >
             <SyncAltIcon ml="6px" color="primary" />
           </IconButton>
         </Flex>
@@ -70,6 +79,7 @@ const PriceChart = ({
           outputCurrency={outputCurrency}
           isMobile={isMobile}
           currentSwapPrice={currentSwapPrice}
+          isReversed={isReversed}
         />
       )}
     </StyledPriceChart>

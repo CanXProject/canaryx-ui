@@ -11,8 +11,8 @@ const IconButton: PolymorphicComponent<BaseButtonProps, "button"> = styled(Butto
   box-shadow: ${({ theme }) => `20px 20px 60px ${theme.colors.buttonAlt}, -20px -20px 60px ${theme.colors.buttonAlt1}`};
 
   &:active {
-    transform: scale(0.95);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  
+   
   }
 
   &:hover {

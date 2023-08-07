@@ -47,7 +47,7 @@ const StyledButton = styled.button<BaseButtonProps>`
   position: relative;
   align-items: center;
   border: 0;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 
     inset 0 -3px 5px rgba(0, 0, 0, 0.125),
     0 2px 4px rgba(0, 0, 0, 0.2);  // Outer shadow
@@ -71,7 +71,7 @@ const StyledButton = styled.button<BaseButtonProps>`
     opacity: 0.85;
     transform: translateY(1px);
     box-shadow: 
-      inset 0 -3px 5px rgba(0, 0, 0, 0.125),
+  
       0 2px 4px rgba(0, 0, 0, 0.2);  // Outer shadow
   }
 

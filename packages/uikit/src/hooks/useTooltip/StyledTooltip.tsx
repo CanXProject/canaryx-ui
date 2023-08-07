@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { m as Motion } from "framer-motion";
 
+
 export const Arrow = styled.div`
   &, &::before {
     position: absolute;
@@ -23,15 +24,15 @@ export const StyledTooltip = styled(Motion.div)`
   padding: 16px;
   font-size: 16px;
   line-height: 130%;
-  border-radius: 10px;
+  border-radius: 5px;
   max-width: 320px;
   z-index: 101;
   background:  ${({ theme }) => theme.colors.backgroundAlt}; /* Shiny glass effect using gradient */
   color: ${({ theme }) => theme.colors.text}; /* Text color from theme */
   box-shadow:
-    0px 1px 2px ${({ theme }) => theme.colors.slideShadow}, /* Inset shadow for shiny reflection */
-    0px 5px 15px ${({ theme }) => theme.colors.shadow}; /* Soft outer shadow */
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder}; /* Subtle border from theme */
+    inset -2px -2px 4px ${({ theme }) => theme.colors.slideShadow}, /* Inset shadow for shiny reflection */
+    inset 2px 2px 4px ${({ theme }) => theme.colors.shadow}; /* Soft outer shadow */
+
 
   /* Define arrow positions based on placement */
   &[data-popper-placement^="top"] > ${Arrow} {

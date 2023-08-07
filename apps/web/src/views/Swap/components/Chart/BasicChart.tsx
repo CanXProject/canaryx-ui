@@ -20,6 +20,7 @@ const BasicChart = ({
   outputCurrency,
   isMobile,
   currentSwapPrice,
+  isReversed = false, // default value
 }) => {
   const [timeWindow, setTimeWindow] = useState<PairDataTimeWindowEnum>(0)
 
@@ -32,8 +33,28 @@ const BasicChart = ({
   const [hoverValue, setHoverValue] = useState<number | undefined>()
   const [hoverDate, setHoverDate] = useState<string | undefined>()
   const valueToDisplay = hoverValue || pairPrices[pairPrices.length - 1]?.value
-  const { changePercentage, changeValue } = getTimeWindowChange(pairPrices)
-  const isChangePositive = changeValue >= 0
+  const { 
+    changePercentage, 
+    changeValue, 
+    reverseChangePercentage, 
+    reverseChangeValue 
+} = getTimeWindowChange(pairPrices);
+
+const displayChangeValue = isReversed ? reverseChangeValue : changeValue;
+const displayChangePercentage = isReversed ? reverseChangePercentage : changePercentage;
+
+
+const reversedValueToDisplay = 1 / valueToDisplay;
+const finalValueToDisplay = isReversed ? reversedValueToDisplay : valueToDisplay;
+
+const reversedPairPrices = pairPrices.map(dataPoint => ({
+  ...dataPoint,
+  value: 1 / dataPoint.value
+}));
+const finalPairPrices = isReversed ? reversedPairPrices : pairPrices;
+
+const isDisplayChangePositive = displayChangeValue >= 0;
+
   const chartHeight = isChartExpanded ? 'calc(100vh - 220px)' : '320px'
   const {
     t,
@@ -78,13 +99,14 @@ const BasicChart = ({
       >
         <Flex flexDirection="column" pt="12px">
           <PairPriceDisplay
-            value={pairPrices?.length > 0 && valueToDisplay}
+            value={pairPrices?.length > 0 && finalValueToDisplay}
             inputSymbol={inputCurrency?.symbol}
             outputSymbol={outputCurrency?.symbol}
           >
-            <Text color={isChangePositive ? 'success' : 'failure'} fontSize="20px" ml="4px" bold>
-              {`${isChangePositive ? '+' : ''}${changeValue.toFixed(3)} (${changePercentage}%)`}
-            </Text>
+            <Text color={isDisplayChangePositive ? 'success' : 'failure'} fontSize="20px" ml="4px" bold>
+    {`${isDisplayChangePositive ? '+' : ''}${displayChangeValue.toFixed(3)} (${displayChangePercentage}%)`}
+</Text>
+
           </PairPriceDisplay>
           <Text small color="secondary">
             {hoverDate || currentDate}
@@ -101,10 +123,10 @@ const BasicChart = ({
       </Flex>
       <Box height={isMobile ? '100%' : chartHeight} p={isMobile ? '0px' : '16px'} width="100%">
         <SwapLineChart
-          data={pairPrices}
+           data={finalPairPrices}
           setHoverValue={setHoverValue}
           setHoverDate={setHoverDate}
-          isChangePositive={isChangePositive}
+          isChangePositive={isDisplayChangePositive}
           isChartExpanded={isChartExpanded}
           timeWindow={timeWindow}
         />
