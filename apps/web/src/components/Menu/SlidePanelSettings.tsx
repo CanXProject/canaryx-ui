@@ -53,7 +53,7 @@ const SlidePanelSettings: React.FC = () => {
       <Flex justifyContent="space-between" alignItems="center" mb="24px">
         <Flex alignItems="center">
           <Text>{t('Show username')}</Text>
-          <QuestionHelper text={t('Shows username of wallet instead of bunnies')} placement="top" ml="4px" />
+          <QuestionHelper text={t('Shows username of wallet instead of address')} placement="top" ml="4px" />
         </Flex>
         <Toggle
           id="toggle-username-visibility"
