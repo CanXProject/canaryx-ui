@@ -1,8 +1,17 @@
-// Import necessary dependencies
+import { CloseIcon } from '@pancakeswap/uikit'
 import styled, { ThemeContext } from 'styled-components'
 import React, { useState, useEffect, useContext } from 'react'
 import SlideOutTriggerNotes from './SlideOutTriggerNotes'
 import SlidePanelSettings from './SlidePanelSettings'
+
+
+const RealisticCloseIcon = styled(CloseIcon)`
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  border-radius: 15%;
+  padding: 4px;
+  box-shadow: 5px 5px 15px #aaaaaa, -5px -5px 15px #ffffff;
+`;
 
 // Define a styled component for the content of the panel
 // This will allow you to add styling to the content easily
@@ -360,25 +369,28 @@ const SlideOutNotes = ({ currentPage }) => {
   // Define function to handle clicks outside the panel
   // This will close the panel if a click is detected outside
   const handleClickOutside = (event) => {
+    // If the clicked target is inside the slide-out panel (`.slide-out-content`), then exit the function
     if (event.target.closest(".slide-out-content")) {
-      return
+        return;
     }
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+};
 
-  // Add event listener for clicks when the panel is open
-  // Remove listener when panel is closed or when the component unmounts
-  useEffect(() => {
+
+// Add event listener for clicks when the panel is open
+// Remove listener when panel is closed or when the component unmounts
+useEffect(() => {
     if (isOpen) {
-      document.addEventListener("click", handleClickOutside)
+        document.addEventListener("click", handleClickOutside)
     }
     return () => {
-      document.removeEventListener("click", handleClickOutside)
+        document.removeEventListener("click", handleClickOutside)
     }
-  }, [isOpen])
+}, [isOpen])
 
-  // Access the theme object from the ThemeContext
-  const theme = useContext(ThemeContext);
+// Access the theme object from the ThemeContext
+const theme = useContext(ThemeContext);
+
 
   return (
     <>
@@ -407,7 +419,22 @@ const SlideOutNotes = ({ currentPage }) => {
 
       {/* Panel container */}
       {/* Here, we use the StyledPanelContainer and pass isOpen and theme as props */}
-      <StyledPanelContainer isOpen={isOpen} theme={theme}>
+      <StyledPanelContainer isOpen={isOpen} theme={theme} className="slide-out-content">
+         {/* Close button at the top-right of the panel */}
+         <button
+                    onClick={() => setIsOpen(false)}
+                    type="button"  // <-- Added type here
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer'
+                    }}
+                >
+                    <RealisticCloseIcon width="24px" height="24px" />
+                </button>
         {/* Panel content */}
         {isOpen && (pageContents[currentPage] || pageContents.swap)}
  

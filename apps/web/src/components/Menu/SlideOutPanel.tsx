@@ -1,8 +1,19 @@
 // Import necessary dependencies
+import {
+    CloseIcon, Flex,
+    Text,
+    ThemeSwitcher,
+    QuestionHelper,
+    Toggle, Checkbox,
+    Button,
+
+} from '@pancakeswap/uikit'
+
 import styled, { ThemeContext } from 'styled-components'
 import React, { useState, useEffect, useContext } from 'react'
 import SlideOutPanelTrigger from './SlideOutPanelTrigger'
 import SlidePanelSettings from './SlidePanelSettings'
+import IssueReportModal from './IssueReportModal';
 
 // Define a styled component for the content of the panel
 // This will allow you to add styling to the content easily
@@ -14,6 +25,17 @@ const PanelContent = styled.p`
 type StyledPanelContainerProps = {
     isOpen: boolean,
 }
+
+
+const RealisticCloseIcon = styled(CloseIcon)`
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  backdrop-filter: blur(5px); // This will blur the content behind the modal
+  border-radius: 15%;
+  padding: 4px;
+  box-shadow: 5px 5px 15px #aaaaaa50, -5px -5px 15px #ffffff50;
+`;
+
 
 // Define a styled component for the panel container
 // This allows you to add styling directly to the container and also use media queries
@@ -31,56 +53,64 @@ const StyledPanelContainer = styled.div<StyledPanelContainerProps>`
     overflow: auto; /* Add a scrollbar when the content overflows */
     max-height: 70vh; /* Set a max height. Adjust this value as needed */
     z-index: 999; // Set an appropriate value to ensure the panel appears above other elements
-
+    
 
     /* Add media queries for mobile */
     @media (max-width: 768px) {
-        width: 80vw; // Width on mobile devices
-        right: ${props => props.isOpen ? "0" : "-80vw"}; // Position on mobile devices
+        width: 80vw; 
+        right: ${props => props.isOpen ? "0" : "-80vw"}; 
+        transition: right 0.5s;
     }
 `;
 
 const SlideOutPanel = () => {
-    // Define state variable to track whether the panel is open
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+
+
 
     // Define function to handle clicks outside the panel
     // This will close the panel if a click is detected outside
     const handleClickOutside = (event) => {
-      if (event.target.closest(".slide-out-content")) {
-        return
-      }
-      setIsOpen(false)
-    }
-  
+        // If the clicked target is inside the slide-out panel (`.slide-out-content`), then exit the function
+        if (event.target.closest(".slide-out-content")) {
+            return;
+        }
+        setIsOpen(false);
+    };
+
+
     // Add event listener for clicks when the panel is open
     // Remove listener when panel is closed or when the component unmounts
     useEffect(() => {
-      if (isOpen) {
-        document.addEventListener("click", handleClickOutside)
-      }
-      return () => {
-        document.removeEventListener("click", handleClickOutside)
-      }
+        if (isOpen) {
+            document.addEventListener("click", handleClickOutside)
+        }
+        return () => {
+            document.removeEventListener("click", handleClickOutside)
+        }
     }, [isOpen])
 
     // Access the theme object from the ThemeContext
     const theme = useContext(ThemeContext);
-   
+
     return (
         <>
             {/* Trigger container */}
-            <div 
+            <div
                 style={{
-                    position: "fixed", 
+                    position: "fixed",
                     right: isOpen ? "40vw" : "0",
                     top: "20%",
-                    transform: "translateY(-0%)",
                     transition: "right 0.5s"
                 }}
             >
                 {/* Trigger */}
-                <div 
+                <div
                     style={{
                         position: "relative",
                         width: "48px",
@@ -91,18 +121,53 @@ const SlideOutPanel = () => {
                     <SlideOutPanelTrigger onClick={() => setIsOpen(!isOpen)} />
                 </div>
             </div>
-            
+
             {/* Panel container */}
-            {/* Here, we use the StyledPanelContainer and pass isOpen and theme as props */}
-            <StyledPanelContainer isOpen={isOpen} theme={theme}>
+            <StyledPanelContainer isOpen={isOpen} theme={theme} className="slide-out-content">
+                {/* Close button at the top-right of the panel */}
+                <button
+                    type="button"
+                    onClick={() => setIsOpen(false)}
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer'
+                    }}
+                >
+                    <RealisticCloseIcon width="24px" height="24px" />
+                </button>
+
                 {/* Panel content */}
-                {/* The panel content is only rendered when the panel is open */}
                 {isOpen && (
-                    <PanelContent><SlidePanelSettings /></PanelContent>
+                    <>
+                        <PanelContent>
+                            <SlidePanelSettings />
+                        </PanelContent>
+
+                        {/* Button inside the SlideOutPanel to open the modal */}
+                        <Button onClick={openModal} type="button" style={{ margin: '20px' }}>
+                            Report an Issue
+                        </Button>
+                    </>
                 )}
             </StyledPanelContainer>
+
+
+
+            {/* The modal */}
+            {isModalOpen && (
+                <>
+
+
+                    <IssueReportModal isOpen={isModalOpen} onClose={closeModal} /></>
+
+
+            )}
         </>
     )
 }
 
-export default SlideOutPanel
+export default SlideOutPanel;
