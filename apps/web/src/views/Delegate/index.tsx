@@ -55,16 +55,16 @@ const StyledDropdown = styled(Dropdown)`
   background: none;
   color: ${({ theme }) => (theme.isDark ? '#5b5b5b' : '#d3d4d9')};
   border-radius: 5px;
-  box-shadow: inset 4px 6px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+  box-shadow: inset 4px 6px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e4e8eb')}, 
               inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}; 
   &:focus {
       outline: none;
-      box-shadow: inset 2px -2px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+      box-shadow: inset 2px -2px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e4e8eb')}, 
                   inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}, 
                   0 0 5px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#6c757d')}; 
 
  & .Dropdown-menu {
-      background: ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')} !important;
+      background: ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e4e8eb')} !important;
     }
   `
 
@@ -104,14 +104,30 @@ const StyledInput = styled.input`
     
     color: ${({ theme }) => (theme.isDark ? '#5b5b5b' : '#d3d4d9')};
     border-radius: 5px;
-    box-shadow: inset 4px 6px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+    box-shadow: inset 4px 6px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e4e8eb')}, 
                 inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}; 
     &:focus {
         outline: none;
-        box-shadow: inset 2px -2px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e9ecef')}, 
+        box-shadow: inset 2px -2px 7px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#e4e8eb')}, 
                     inset -2px -4px 7px ${({ theme }) => (theme.isDark ? '#6f6f71' : '#ffffff')}, 
                     0 0 5px ${({ theme }) => (theme.isDark ? '#1c1d1e' : '#6c757d')}; 
 `
+const TextBoxStyle = theme => ({
+  display: 'block',
+  width: '85%',
+  padding: '14px',
+  border: 'none',
+  background: 'none',
+  lineHeight: '1.5', 
+  fontSize: '14px',  
+  color: theme.isDark ? '#5b5b5b' : '#d3d4d9',
+  borderRadius: '5px',
+  boxShadow: `inset 4px 6px 7px ${theme.isDark ? '#1c1d1e' : '#e4e8eb'}, 
+              inset -2px -4px 7px ${theme.isDark ? '#6f6f71' : '#ffffff'}`,
+ marginTop: '25px',
+  marginBottom: '0px',
+  marginLeft: '33px'
+});
 
 const StyledCardBody = styled(CardBody)`
   border: none;
@@ -259,6 +275,7 @@ const CreateToken = () => {
   const formattedBnbBalance = parseFloat(formatEther(bnbBalance))
   const { balance: wbnbBalance } = useTokenBalance(wbnbAddress)
   const [delegationPercent, setDelegationPercent] = useState(0)
+  const [totalDelegatedPercentage, setTotalDelegatedPercentage] = useState(0);
   const formattedWbnbBalance = getBalanceNumber(wbnbBalance)
   const wsgbContract = useContract(wbnbAddress, WSGBABI, true)
   const ftsoAddress = '0x13F7866568dC476cC3522d17C23C35FEDc1431C5'
@@ -276,6 +293,16 @@ const CreateToken = () => {
     }
   }, [ftsoContract, account])
 
+  useEffect(() => {
+    const totalPercentage = delegations.reduce((acc, item) => acc + item.pips, 0);
+    setTotalDelegatedPercentage(totalPercentage);
+}, [delegations]);
+
+let availablePercentage = 100 - totalDelegatedPercentage;
+
+if (delegations.length >= 2) {
+    availablePercentage = 0;
+}
   const loadMyData = async () => {
     try {
       const delegationInfo = await wsgbContract.delegatesOf(account)
@@ -401,8 +428,12 @@ const CreateToken = () => {
         const pips = parseInt(pipsRaw.toString())
         const resp = await wsgbContract.delegate(delegationAddress, pips)
         await resp.wait('1')
-
         await loadMyData()
+
+        // Update the total delegated percentage after a successful delegation
+        const newDelegatedPercentage = (formData.delegationAmount * 100) / formattedWbnbBalance;
+        setTotalDelegatedPercentage(prev => prev + newDelegatedPercentage);
+
       } catch (err) {
         console.error(err)
       }
@@ -523,15 +554,43 @@ const CreateToken = () => {
                         <LabelInputContainer>
                           <StyledSecondaryLabel>Enter WSGB Delegation Amount</StyledSecondaryLabel>
                           <StyledInput
-                            type="number"
-                            onChange={(e) => setFormData({ ...formData, delegationAmount: Number(e.target.value) })}
-                            value={formData.delegationAmount.toString()}
-                            // onChange={handleDateChange('startTime')}
-                            placeholder="i.e 100000"
-                          />
+    type="number"
+    onChange={(e) => {
+        const inputValue = Number(e.target.value);
+        const inputPercentage = (inputValue * 100) / formattedWbnbBalance;
+        if (inputPercentage + totalDelegatedPercentage <= 100) {
+            setFormData({ ...formData, delegationAmount: inputValue });
+        } else {
+            // You can handle the error here, either by setting an error state or restricting the input
+            console.error("Delegation percentage exceeds 100%");
+        }
+    }}
+    value={formData.delegationAmount.toString()}
+    placeholder="i.e 100000"
+/>
+{formData.delegationAmount > 0 && (
+    <div style={TextBoxStyle(theme)}>
+        <div>
+            Total Delegated: {totalDelegatedPercentage}%
+        </div>
+        <div>
+            You can delegate up to {availablePercentage}%
+        </div>
+        <div>
+            Providers Delegated To: {delegations.length} / 2
+        </div>
+        {delegations.length >= 2 && (
+            <div style={{color: '#ff000070', fontSize: '12px', fontWeight: 'normal'}}> 
+            You have reached the maximum number of providers you can delegate to.
+        </div>
+        )}
+    </div>
+)}
+
                         </LabelInputContainer>
 
                         <PercentSlider
+                         max={100 - totalDelegatedPercentage} // This will set the maximum allowable value
                           onValueChanged={(e) => {
                             const _inputAmount = (formattedWbnbBalance * Number(e)) / 100
                             setFormData({ ...formData, delegationAmount: Number(_inputAmount) })
@@ -592,7 +651,7 @@ const CreateToken = () => {
 
                                     textAlign="left"
                                   >
-                                    Percent
+                                    Total Delegated
                                   </Text>
                                 </Th>
                                 <Th />

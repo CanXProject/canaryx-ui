@@ -7,11 +7,12 @@ import { Button } from "../../components/Button";
 import { Slider } from "../../components/Slider";
 
 interface PercentSliderProps {
+  max?: number;
   onValueChanged: (value: string) => void;
   currentValue: number;
 }
 
-export function PercentSlider({ onValueChanged, currentValue }: PercentSliderProps) {
+export function PercentSlider({ onValueChanged, currentValue, max }: PercentSliderProps) {
   const { t } = useTranslation();
 
   const liquidityPercentChangeCallback = useCallback(
@@ -47,7 +48,7 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
       <Slider
         name="lp-amount"
         min={0}
-        max={100}
+        max={max || 100}  // Use the provided max or default to 100
         value={validInnerLiquidityPercentage}
         valueLabel={validInnerLiquidityPercentage.toString()} // pass current value as valueLabel
         onValueChanged={handleChangePercent}
@@ -55,10 +56,17 @@ export function PercentSlider({ onValueChanged, currentValue }: PercentSliderPro
       />
       <AtomBox display="flex" flexWrap="wrap" justifyContent="space-between">
         {percentages.map((percentage) => (
-          <Button key={percentage} variant="tertiary" scale="sm" onClick={() => onValueChanged(percentage)} aria-label={`Set to ${percentage}%`}>
-            {percentage === "100" ? t("Max") : `${percentage}%`}
-          </Button>
-        ))}
+          <Button 
+          key={percentage} 
+          variant="tertiary" 
+          scale="sm" 
+          disabled={!!max && max < Number(percentage)}
+          onClick={() => onValueChanged(percentage)} 
+          aria-label={`Set to ${percentage}%`}
+      >
+          {percentage === "100" ? t("Max") : `${percentage}%`}
+      </Button>
+  ))}
       </AtomBox>
     </>
   );
