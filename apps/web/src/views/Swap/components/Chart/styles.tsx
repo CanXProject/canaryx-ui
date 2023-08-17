@@ -23,7 +23,7 @@ export const StyledPriceChart = styled(Box) <{
     border: ${({ theme }) => `0px solid ${theme.colors.cardBorder}`}; // Removes the border again.
     border-radius: 16px;
     width: ${({ $isExpanded, $isFullWidthContainer }) => ($isFullWidthContainer || $isExpanded ? '100%' : '60%')}; // Adjusts the width based on whether the box is expanded or should fill the container.
-    height: '100%'; 
+    height: ${({ $isExpanded }) => ($isExpanded ? '100%' : '516px')}; // Adjusts the height based on whether the box is expanded.
     box-shadow: ${({ $isDark, $isExpanded }) =>
     $isExpanded ?
     // If component is in expanded state

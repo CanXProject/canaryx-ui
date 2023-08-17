@@ -134,6 +134,9 @@ const StyledHeader = styled(PageHeader)`
 const Left = styled(Flex)`
   flex-direction: column;
   flex: 1;
+  @media (max-width: 805px) {
+    flex: 1 0 100%;  // This makes the component take full width at 765px and below.
+  }
 `
 
 const Right = styled(Flex)`
@@ -147,13 +150,22 @@ const Right = styled(Flex)`
     margin-top: 24px;
   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  @media (max-width: 805px) {
+    flex: 1 0 100%;  // This makes the component take full width at 765px and below.
+    & img {
+      height: auto;
+      width: auto;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
     & img {
       height: auto;
       width: auto;
     }
   }
 `
+
 
 const ftsoProviders = [
   { name: 'Bifrost Oracle', address: '0x69141E890F3a79cd2CFf552c0B71508bE23712dC' },
@@ -453,15 +465,15 @@ const CreateToken = () => {
         >
           <AppBody>
             <Box
-               width="100%"
-               style={{
-                 background: 'none',
-                 boxShadow: `inset 4px 6px 7px ${theme.isDark ? '#1c1d1e' : '#e9ecef'}, 
+              width="100%"
+              style={{
+                background: 'none',
+                boxShadow: `inset 4px 6px 7px ${theme.isDark ? '#1c1d1e' : '#e9ecef'}, 
                              inset -2px -4px 7px ${theme.isDark ? '#6f6f71' : '#ffffff'}`,
-                 width: '100%',
-                 display: 'flex',
-               }}
-               className="testtest"
+                width: '100%',
+                display: 'flex',
+              }}
+              className="testtest"
             >
               <Card
                 style={{
@@ -475,8 +487,10 @@ const CreateToken = () => {
                 </CardHeader>
 
                 <StyledCardBody>
-                  <div style={{ display: isMobile ? 'block' : 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ width: isMobile ? '100%' : '80%' }}>
+                  <div style={{
+                    display: window.innerWidth <= 800 ? 'block' : (isMobile ? 'block' : 'flex'),
+                    justifyContent: 'space-between'
+                  }}>                    <div style={{ width: isMobile ? '100%' : '80%' }}>
                       <Box mb="24px">
                         <LabelInputContainer>
                           <StyledSecondaryLabel>Your SGB Balance:</StyledSecondaryLabel>
@@ -564,7 +578,7 @@ const CreateToken = () => {
                                     fontSize="12px"
                                     bold
                                     textTransform="uppercase"
-                                   
+
                                     textAlign="left"
                                   >
                                     Your Delegation Partners
@@ -575,7 +589,7 @@ const CreateToken = () => {
                                     fontSize="12px"
                                     bold
                                     textTransform="uppercase"
-                                    
+
                                     textAlign="left"
                                   >
                                     Percent
@@ -585,9 +599,9 @@ const CreateToken = () => {
                               </thead>
                               <tbody>
                                 {delegations.map((item, index) => {
-                                 
+
                                   return (
-                                     // eslint-disable-next-line react/no-array-index-key
+                                    // eslint-disable-next-line react/no-array-index-key
                                     <tr key={index}>
                                       <Td>
                                         <Text fontSize="14px">
