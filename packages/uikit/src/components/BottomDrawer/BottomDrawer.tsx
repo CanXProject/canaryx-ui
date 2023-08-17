@@ -37,7 +37,7 @@ const BottomDrawer: React.FC<React.PropsWithChildren<BottomDrawerProps>> = ({ co
       <>
         <Overlay isUnmounting={!isOpen} />
         <DrawerContainer ref={ref} isUnmounting={!isOpen}>
-          <Box position="absolute" right="16px" top="0">
+          <Box position="absolute" right="16px" top="0"  zIndex={9999}>
             <IconButton variant="text" onClick={() => setIsOpen(false)}>
               <CloseIcon />
             </IconButton>

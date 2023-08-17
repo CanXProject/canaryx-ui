@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Flex, Text, Button, Modal } from '@pancakeswap/uikit';
 import styled from 'styled-components';
 
-
-
 const ReportIssueModalStyled = styled(Modal)`
   z-index: 10000;  
   position: fixed;  
@@ -11,19 +9,7 @@ const ReportIssueModalStyled = styled(Modal)`
   left: 50%;  
   transform: translate(-50%, -50%);  
   box-shadow: 0px 0px 100px 3000px rgba(0, 0, 0, 0.2);
-
-  // Default size for mobile
-  width: 90%;
-
-  // Tablet adjustments
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 70%;
-  }
-
-  // Desktop adjustments
-  @media (min-width: 1024px) {
-    width: 50%;
-  }
+  border-radius: 4px;
 `;
 
 const StyledTextarea = styled.textarea`
@@ -188,137 +174,137 @@ const IssueReportModal = ({ isOpen, onClose }) => {
   const [operatingSystem, setOperatingSystem] = useState('windows');
 
   const handleSubmit = async () => {
-      const formData = {
-          issueDescription,
-          affectedURL,
-          severity,
-          issueType,
-          browser: showBrowserDetails ? browser : null,
-          operatingSystem: showBrowserDetails ? operatingSystem : null
-      };
+    const formData = {
+      issueDescription,
+      affectedURL,
+      severity,
+      issueType,
+      browser: showBrowserDetails ? browser : null,
+      operatingSystem: showBrowserDetails ? operatingSystem : null
+    };
 
-      try {
-        // sending the form data to the server
-        const response = await fetch('https://reporter-two.vercel.app/api/report-issue', { 
+    try {
+      // sending the form data to the server
+      const response = await fetch('https://reporter-two.vercel.app/api/report-issue', {
 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
 
-        // Handle success 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+      // Handle success 
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-        // If you don't expect a JSON response from the server, you can comment out the next line
-        // const data = await response.json();
-    
-        // Display a success message
-        alert('Issue reported successfully!');
-        onClose();
+      // If you don't expect a JSON response from the server, you can comment out the next line
+      // const data = await response.json();
+
+      // Display a success message
+      alert('Issue reported successfully!');
+      onClose();
     } catch (error) {
-        // Handle the error
-        alert('There was an error reporting the issue. Please try again later.');
-        console.error('Error reporting issue:', error);
+      // Handle the error
+      alert('There was an error reporting the issue. Please try again later.');
+      console.error('Error reporting issue:', error);
     }
-};
+  };
 
   return (
-      <PanelContent>
-          <ReportIssueModalStyled title="Issue Report form" onDismiss={onClose}>
-              <H2>Report an Issue</H2>
-              <Blockquote>
-                  <Text>
-                      Please do not share any personal, private, or sensitive information in this report.
-                  </Text>
-              </Blockquote>
-              <H3>Describe the issue:</H3>
-              <StyledTextarea
-                  placeholder="Describe the issue..."
-                  value={issueDescription}
-                  onChange={(e) => setIssueDescription(e.target.value)}
-              />
+    <PanelContent>
+      <ReportIssueModalStyled title="Issue Report form" onDismiss={onClose}>
+        <H2>Report an Issue</H2>
+        <Blockquote>
+          <Text>
+            Please do not share any personal, private, or sensitive information in this report.
+          </Text>
+        </Blockquote>
+        <H3>Describe the issue:</H3>
+        <StyledTextarea
+          placeholder="Describe the issue..."
+          value={issueDescription}
+          onChange={(e) => setIssueDescription(e.target.value)}
+        />
 
 
 
-            <H3>Affected URL:</H3>
-            <StyledInput
-                type="text"
-                value={affectedURL}
-                onChange={(e) => setAffectedURL(e.target.value)}
-                style={{ width: '100%', marginBottom: '10px' }}
-            />
+        <H3>Affected URL:</H3>
+        <StyledInput
+          type="text"
+          value={affectedURL}
+          onChange={(e) => setAffectedURL(e.target.value)}
+          style={{ width: '100%', marginBottom: '10px' }}
+        />
 
-            <H3>Severity:</H3>
+        <H3>Severity:</H3>
+        <StyledSelect
+          value={severity}
+          onChange={(e) => setSeverity(e.target.value)}
+          style={{ width: '100%', marginBottom: '10px' }}
+        >
+          <option value="minor">Minor</option>
+          <option value="moderate">Moderate</option>
+          <option value="major">Major</option>
+          <option value="critical">Critical</option>
+        </StyledSelect>
+
+        <H3>Issue Type:</H3>
+        <StyledSelect
+          value={issueType}
+          onChange={(e) => setIssueType(e.target.value)}
+          style={{ width: '100%', marginBottom: '10px' }}
+        >
+          <option value="visualBug">Visual Bug</option>
+          <option value="functionalBug">Functional Bug</option>
+          <option value="performanceIssue">Performance Issue</option>
+          <option value="contentError">Content Error</option>
+        </StyledSelect>
+
+        {/* Using Flex to align items on the same line */}
+        <Flex alignItems="center" mb="8px">
+          <H3>Would you like to include browser and OS details? (optional)</H3>
+          <input type="checkbox" onChange={(e) => setShowBrowserDetails(e.target.checked)} />
+        </Flex>
+
+
+        {showBrowserDetails && (
+          <>
+            <H3>Browser:</H3>
             <StyledSelect
-                value={severity}
-                onChange={(e) => setSeverity(e.target.value)}
-                style={{ width: '100%', marginBottom: '10px' }}
+              value={browser}
+              onChange={(e) => setBrowser(e.target.value)}
+              style={{ width: '100%', marginBottom: '10px' }}
             >
-                <option value="minor">Minor</option>
-                <option value="moderate">Moderate</option>
-                <option value="major">Major</option>
-                <option value="critical">Critical</option>
+              {/* List of common browsers. Add more if needed */}
+              <option value="chrome">Chrome</option>
+              <option value="firefox">Firefox</option>
+              <option value="safari">Safari</option>
+              <option value="edge">Edge</option>
             </StyledSelect>
 
-            <H3>Issue Type:</H3>
+            <H3>Operating System:</H3>
             <StyledSelect
-                value={issueType}
-                onChange={(e) => setIssueType(e.target.value)}
-                style={{ width: '100%', marginBottom: '10px' }}
+              value={operatingSystem}
+              onChange={(e) => setOperatingSystem(e.target.value)}
+              style={{ width: '100%', marginBottom: '10px' }}
             >
-                <option value="visualBug">Visual Bug</option>
-                <option value="functionalBug">Functional Bug</option>
-                <option value="performanceIssue">Performance Issue</option>
-                <option value="contentError">Content Error</option>
+              {/* List of common operating systems. Add more if needed */}
+              <option value="windows">Windows</option>
+              <option value="mac">Mac OS</option>
+              <option value="linux">Linux</option>
+              <option value="android">Android</option>
+              <option value="ios">iOS</option>
             </StyledSelect>
+          </>
+        )}
 
-            {/* Using Flex to align items on the same line */}
-            <Flex alignItems="center" mb="8px">
-                <H3>Would you like to include browser and OS details? (optional)</H3>
-                <input type="checkbox" onChange={(e) => setShowBrowserDetails(e.target.checked)} />
-            </Flex>
-
-
-            {showBrowserDetails && (
-                <>
-                    <H3>Browser:</H3>
-                    <StyledSelect
-                        value={browser}
-                        onChange={(e) => setBrowser(e.target.value)}
-                        style={{ width: '100%', marginBottom: '10px' }}
-                    >
-                        {/* List of common browsers. Add more if needed */}
-                        <option value="chrome">Chrome</option>
-                        <option value="firefox">Firefox</option>
-                        <option value="safari">Safari</option>
-                        <option value="edge">Edge</option>
-                    </StyledSelect>
-
-                    <H3>Operating System:</H3>
-                    <StyledSelect
-                        value={operatingSystem}
-                        onChange={(e) => setOperatingSystem(e.target.value)}
-                        style={{ width: '100%', marginBottom: '10px' }}
-                    >
-                        {/* List of common operating systems. Add more if needed */}
-                        <option value="windows">Windows</option>
-                        <option value="mac">Mac OS</option>
-                        <option value="linux">Linux</option>
-                        <option value="android">Android</option>
-                        <option value="ios">iOS</option>
-                    </StyledSelect>
-                </>
-            )}
-
-            <Button mt="16px" onClick={handleSubmit} type="button">
-                Submit
-            </Button>
-        </ReportIssueModalStyled></PanelContent>
-    );
+        <Button mt="16px" onClick={handleSubmit} type="button">
+          Submit
+        </Button>
+      </ReportIssueModalStyled></PanelContent>
+  );
 };
 
 export default IssueReportModal;

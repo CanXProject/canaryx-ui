@@ -14,16 +14,16 @@ export const StyledPriceChart = styled(Box) <{
   opacity: 1; // Sets the box to be fully visible.
   transform: translateX(-100%); // Moves the box 100% to the left of its original position.
   transition: opacity 1s ease-out, transform 1s ease-out, box-shadow 0.5s ease-out; // Adds a transition effect to opacity, transform and box-shadow properties.
-
-
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Add a subtle shadow for depth
   // Defines the properties of the box when the viewport is wider than the sm (small) breakpoint defined in the theme.
   ${({ theme }) => theme.mediaQueries.sm} {
     padding-top: 20px; // Reduces the top padding.
     background: ${({ $isDark }) => ($isDark ? '#25252b80' : '#FFFFFF80')}; // Sets the background color based on whether the theme is dark.
     border: ${({ theme }) => `0px solid ${theme.colors.cardBorder}`}; // Removes the border again.
-    border-radius: ${({ $isExpanded }) => ($isExpanded ? '16px' : '16px')}; // Adjusts the border radius based on whether the box is expanded.
+    border-radius: 16px;
     width: ${({ $isExpanded, $isFullWidthContainer }) => ($isFullWidthContainer || $isExpanded ? '100%' : '60%')}; // Adjusts the width based on whether the box is expanded or should fill the container.
-    height: ${({ $isExpanded }) => ($isExpanded ? '100%' : '516px')}; // Adjusts the height based on whether the box is expanded.
+    height: '100%'; 
     box-shadow: ${({ $isDark, $isExpanded }) =>
     $isExpanded ?
     // If component is in expanded state

@@ -13,7 +13,9 @@ export const ModalHeader = styled.div<{ background?: string }>`
   background: transparent;
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
   display: flex;
+  flex-shrink: 0; // Ensure the header doesn't shrink.
   padding: 12px 24px;
+  overflow: hidden;
 
   ${({ theme }) => theme.mediaQueries.md} {
     background: ${({ background }) => background || "transparent"};
@@ -27,13 +29,9 @@ export const ModalTitle = styled(Flex)`
 
 export const ModalBody = styled(Flex)`
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: calc(90vh - ${mobileFooterHeight}px);
-  ${({ theme }) => theme.mediaQueries.md} {
-    display: flex;
-    max-height: 90vh;
-  }
+  overflow: hidden; // Set overflow to hidden here.
+  padding-right: 16px;
+  flex: 1; // Allow the body to grow and take available space.
 `;
 
 export const ModalCloseButton: React.FC<React.PropsWithChildren<{ onDismiss: ModalProps["onDismiss"] }>> = ({
@@ -54,20 +52,23 @@ export const ModalBackButton: React.FC<React.PropsWithChildren<{ onBack: ModalPr
   );
 };
 
-export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
-  overflow: hidden;
+export const ModalContainer = styled(MotionBox) <{ $minWidth: string }>`
+  overflow: auto;
   background: ${({ theme }) => theme.modal.background};
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  border-radius: 32px 32px 0px 0px;
-  width: 100%;
-  max-height: calc(var(--vh, 1vh) * 100);
+  border-radius: 16px 16px 16px 16px;
+  width: 90vw; // Set the width to be 90% of the viewport width for mobile views.
+  max-height: 90vh;
+  min-height: auto; // Allow the modal to shrink based on content.
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: absolute;
   min-width: ${({ $minWidth }) => $minWidth};
   bottom: 0;
   max-width: none !important;
-  min-height: 300px;
+ 
+
+  
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: auto;
