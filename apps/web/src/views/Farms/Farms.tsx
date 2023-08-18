@@ -70,7 +70,7 @@ const ControlContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     padding: 16px 32px;
-    margin-bottom: 0;
+    margin-bottom: 32px;
     opacity: 0; // this line makes the component initially invisible
   transition: opacity 2s ease-in-out 2s; // this line gradually changes the opacity after 1s delay
 

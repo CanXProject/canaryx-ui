@@ -57,7 +57,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
   [ChainId.BSC]: [bscTokens.usdt, bscTokens.cake, bscTokens.btcb],
   [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
-  [ChainId.SONGBIRD]: [songbirdTokens.wbnb, songbirdTokens.cake, songbirdTokens.busd],
+  [ChainId.SONGBIRD]: [songbirdTokens.wbnb, songbirdTokens.cake,songbirdTokens.cnyx, songbirdTokens.busd],
 
 }
 
@@ -68,7 +68,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.BSC]: [bscTokens.wbnb, bscTokens.dai, bscTokens.busd, bscTokens.usdt, bscTokens.cake],
   [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
 
-  [ChainId.SONGBIRD]: [songbirdTokens.wbnb, songbirdTokens.cake, songbirdTokens.busd],
+  [ChainId.SONGBIRD]: [songbirdTokens.wbnb, songbirdTokens.cake, songbirdTokens.cnyx, songbirdTokens.busd],
 
 }
 

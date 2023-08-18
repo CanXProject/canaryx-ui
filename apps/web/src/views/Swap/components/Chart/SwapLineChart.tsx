@@ -146,9 +146,9 @@ const SwapLineChart = ({
     }
   }, [transformedData, isDark, colors, isChartExpanded, locale, timeWindow, setHoverDate, setHoverValue])
 
-  return (
+ return (
     <>
-      {!chartCreated && <LineChartLoader />}
+      {!chartCreated && <div style={{ position: 'relative', zIndex: 1000 }}><LineChartLoader /></div>}
       <div ref={chartRef} id="swap-line-chart" {...rest} />
     </>
   )

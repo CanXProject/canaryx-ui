@@ -27,6 +27,14 @@ export const CANARY_SONGBIRD = new ERC20Token(
   'CanaryXSwap Token',
   '',
 )
+export const CNYX_SONGBIRD = new ERC20Token(
+  ChainId.SONGBIRD,
+  '0x8d32E20d119d936998575B4AAff66B9999011D27',
+  18,
+  'CNYX',
+  'CanaryX',
+  '',
+)
 
 export const USDC_BSC = new ERC20Token(
   ChainId.BSC,
@@ -101,7 +109,7 @@ export const BUSD_TESTNET = new ERC20Token(
 
 export const BUSD_SONGBIRD = new ERC20Token(
   ChainId.SONGBIRD,
-  '0x70Ad7172EF0b131A1428D0c1F66457EB041f2176',
+  '0x70ad7172ef0b131a1428d0c1f66457eb041f2176',
   18,
   'CAND',
   'Canary Dollar',
