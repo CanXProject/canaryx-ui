@@ -41,10 +41,10 @@
     {
       "name": "Canary Dollar",
       "symbol": "CAND",
-      "address": "0x70Ad7172ef0b131a1428d0c1f66457eb041f2176",
+      "address": "0x70ad7172ef0b131a1428d0c1f66457eb041f2176",
       "chainId": 19,
       "decimals": 18,
-      "logoURI": "https://app.canaryx.finance/images/tokens/0x70Ad7172ef0b131a1428d0c1f66457eb041f2176.png"
+      "logoURI": "https://app.canaryx.finance/images/tokens/0x70ad7172ef0b131a1428d0c1f66457eb041f2176.png"
     },
     {
       "name": "Wrapped BNB",
