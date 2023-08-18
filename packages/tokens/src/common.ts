@@ -109,7 +109,7 @@ export const BUSD_TESTNET = new ERC20Token(
 
 export const BUSD_SONGBIRD = new ERC20Token(
   ChainId.SONGBIRD,
-  '0x70ad7172ef0b131a1428d0c1f66457eb041f2176',
+  '0x70Ad7172ef0b131a1428d0c1f66457eb041f2176',
   18,
   'CAND',
   'Canary Dollar',
