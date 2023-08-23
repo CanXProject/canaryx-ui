@@ -122,38 +122,49 @@ const SlideOutPanel = () => {
                 </div>
             </div>
 
-            {/* Panel container */}
-            <StyledPanelContainer isOpen={isOpen} theme={theme} className="slide-out-content">
-                {/* Close button at the top-right of the panel */}
-                <button
-                    type="button"
-                    onClick={() => setIsOpen(false)}
-                    style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer'
-                    }}
-                >
-                    <RealisticCloseIcon width="24px" height="24px" />
-                </button>
+           {/* Panel container */}
+<StyledPanelContainer isOpen={isOpen} theme={theme} className="slide-out-content">
+    {/* Close button at the top-right of the panel */}
+    <button
+        type="button"
+        onClick={() => setIsOpen(false)}
+        style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer'
+        }}
+    >
+        <RealisticCloseIcon width="24px" height="24px" />
+    </button>
 
-                {/* Panel content */}
-                {isOpen && (
-                    <>
-                        <PanelContent>
-                            <SlidePanelSettings />
-                        </PanelContent>
+    {/* Panel content */}
+    {isOpen && (
+        <>
+            <PanelContent>
+                <SlidePanelSettings />
+            </PanelContent>
 
-                        {/* Button inside the SlideOutPanel to open the modal */}
-                        <Button onClick={openModal} type="button" style={{ margin: '20px' }}>
-                            Report an Issue
-                        </Button>
-                    </>
-                )}
-            </StyledPanelContainer>
+            {/* Description */}
+            <div style={{ padding: '10px', fontSize: '14px' }}>
+                This allows users to add their tokens to a list that will show on the exchange. Users can manually add the list by selecting Manage Tokens in the popup on the swap page. If it does not automatically show, the URL to add manually is: <a href="https://tokenlist.canaryx.finance/tokens.json" target="_blank" rel="noopener noreferrer">https://tokenlist.canaryx.finance/tokens.json</a>.
+            </div>
+
+            {/* Button to visit the provided link */}
+            <Button onClick={() => window.open('https://tokenlist.canaryx.finance/', '_blank')} type="button" style={{ margin: '20px' }}>
+                Add Token
+            </Button>
+
+            {/* Button inside the SlideOutPanel to open the modal */}
+            <Button onClick={openModal} type="button" style={{ margin: '20px' }}>
+                Report an Issue
+            </Button>
+        </>
+    )}
+</StyledPanelContainer>
+
 
 
 
