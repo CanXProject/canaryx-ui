@@ -9,7 +9,7 @@ import {
   TrophyFillIcon,
   NftIcon,
   NftFillIcon,
-  MoreIcon,
+  AddIcon,
   DropdownMenuItems,
   VerifiedIcon,
 } from '@pancakeswap/uikit'
@@ -54,6 +54,7 @@ const config: (
           label: t('Swap'),
           href: '/swap',
         },
+
         // {
         //   label: t('Limit'),
         //   href: '/limit-orders',
@@ -82,7 +83,7 @@ const config: (
       label: t('Earn'),
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
-      image: '/images/decorations/pe2.png',
+      image: '',
       items: [
         {
           label: t('Delegate'),
@@ -108,11 +109,14 @@ const config: (
     {
       label: t('Create'),
       href: 'https://canaryx.finance/create',
-      icon: VerifiedIcon,
-      // fillIcon: HotFillIcon,
-      image: '/images/decorations/pe2.png',
-      items: [],
-    },
+      icon: AddIcon,
+      image: '',
+      items: [        {
+        label: t('Add Token'),
+        href: 'https://tokenlist.canaryx.finance/',
+      },
+]
+  },
     
     // {
     //   label: '',

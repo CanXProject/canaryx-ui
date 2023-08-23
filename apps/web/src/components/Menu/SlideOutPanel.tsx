@@ -147,10 +147,7 @@ const SlideOutPanel = () => {
                 <SlidePanelSettings />
             </PanelContent>
 
-            {/* Description */}
-            <div style={{ padding: '10px', fontSize: '14px' }}>
-                This allows users to add their tokens to a list that will show on the exchange. Users can manually add the list by selecting Manage Tokens in the popup on the swap page. If it does not automatically show, the URL to add manually is: <a href="https://tokenlist.canaryx.finance/tokens.json" target="_blank" rel="noopener noreferrer">https://tokenlist.canaryx.finance/tokens.json</a>.
-            </div>
+   
 
             {/* Button to visit the provided link */}
             <Button onClick={() => window.open('https://tokenlist.canaryx.finance/', '_blank')} type="button" style={{ margin: '20px' }}>
