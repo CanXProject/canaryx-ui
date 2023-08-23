@@ -8,6 +8,7 @@ import {
   WARNING_LIST_URLS,
   ETH_URLS,
   BSC_URLS,
+  SGB_URLS
 } from 'config/constants/lists'
 import { atom, useAtomValue } from 'jotai'
 import mapValues from 'lodash/mapValues'
@@ -189,9 +190,9 @@ export function useAllLists(): {
     readonly error: string | null
   }
 } {
-  const { chainId } = useActiveChainId()
+  const { chainId } = useActiveChainId();
 
-  const urls = useAtomValue(selectorByUrlsAtom)
+  const urls = useAtomValue(selectorByUrlsAtom);
 
   return useMemo(
     () =>
@@ -199,10 +200,11 @@ export function useAllLists(): {
         urls,
         (_, url) =>
           (chainId === ChainId.ETHEREUM && ETH_URLS.includes(url)) ||
-          (chainId === ChainId.BSC && BSC_URLS.includes(url)),
+          (chainId === ChainId.BSC && BSC_URLS.includes(url)) ||
+          (chainId === ChainId.SONGBIRD && SGB_URLS.includes(url)),  // Add this line
       ),
     [chainId, urls],
-  )
+  );
 }
 
 function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddressMap {
@@ -226,7 +228,8 @@ export function useActiveListUrls(): string[] | undefined {
       urls.filter(
         (url) =>
           (chainId === ChainId.ETHEREUM && ETH_URLS.includes(url)) ||
-          (chainId === ChainId.BSC && BSC_URLS.includes(url)),
+          (chainId === ChainId.BSC && BSC_URLS.includes(url))||
+          (chainId === ChainId.SONGBIRD && SGB_URLS.includes(url)), // Added condition for Songbird
       ),
     [urls, chainId],
   )

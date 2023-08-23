@@ -14,11 +14,12 @@ import {
 } from '@pancakeswap/uikit'
 import { TokenList, Version } from '@pancakeswap/token-lists'
 import Card from 'components/Card'
-import { BSC_URLS, ETH_URLS, UNSUPPORTED_LIST_URLS } from 'config/constants/lists'
+import { MULTI_CHAIN_LIST_URLS, UNSUPPORTED_LIST_URLS, SGB_URLS, ETH_URLS} from 'config/constants/lists'
 import { useAtomValue } from 'jotai'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useListState } from 'state/lists/lists'
 import styled from 'styled-components'
+
 import {
   useFetchListCallback,
   acceptListUpdate,
@@ -150,7 +151,9 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
             handleEnableList()
           }
         }}
-      />
+      /> 
+
+
     </RowWrapper>
   )
 })
@@ -206,11 +209,14 @@ function ManageLists({
         const isValid = Boolean(lists[listUrl].current) && !UNSUPPORTED_LIST_URLS.includes(listUrl)
 
         if (isValid) {
-          return (
-            (chainId === ChainId.ETHEREUM && ETH_URLS.includes(listUrl)) ||
-            (chainId === ChainId.BSC && BSC_URLS.includes(listUrl))
-          )
+          return MULTI_CHAIN_LIST_URLS[chainId]?.includes(listUrl)
         }
+
+      //   return (
+      //     (chainId === ChainId.SGB_URLS))
+      //   )
+      // }
+
 
         return false
       })
@@ -250,20 +256,33 @@ function ManageLists({
   const [addError, setAddError] = useState<string | undefined>()
 
   useEffect(() => {
-    async function fetchTempList() {
+    // if valid url, fetch details for card
+    if (validUrl) {
       fetchList(listUrlInput, false)
         .then((list) => setTempList(list))
         .catch(() => setAddError('Error importing list'))
-    }
-    // if valid url, fetch details for card
-    if (validUrl) {
-      fetchTempList()
     } else {
       setTempList(undefined)
       if (listUrlInput !== '') {
         setAddError('Enter valid list location')
       }
     }
+
+    // useEffect(() => {
+    //   async function fetchTempList() {
+    //     fetchList(listUrlInput, false)
+    //       .then((list) => setTempList(list))
+    //       .catch(() => setAddError('Error importing list'))
+    //   }
+    //   // if valid url, fetch details for card
+    //   if (validUrl) {
+    //     fetchTempList()
+    //   } else {
+    //     setTempList(undefined)
+    //     if (listUrlInput !== '') {
+    //       setAddError('Enter valid list location')
+    //     }
+    //   }
 
     // reset error
     if (listUrlInput === '') {
